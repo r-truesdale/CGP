@@ -1,12 +1,37 @@
 @import url("https://fonts.googleapis.com/css?family=DM+Sans:400,700|Convergence:400");
-:root{
+
+:root {
  --font-family-convergence: "Convergence";
 }
-.title{
- color: rgba(245,246,246,1);
+
+.display {
+ align-items: flex-start;
+ background-color: rgba(66, 93, 72, 1);
+ border: 5px solid rgba(149, 165, 151, 1);
+ border-radius: 15px;
+ box-shadow: 0px 4px 4px #00000040;
+ display: flex;
+ gap:10px;
+ overflow: hidden;
+ padding:10px;
+ width: fit-content;
+}
+
+.title {
+ color: rgba(245, 246, 246, 1);
  font-family: var(--font-family-convergence);
  font-size: 32px;
  font-weight: 400;
  min-height: 38px;
  min-width: 296px;
+}
+
+#title-block {
+ align-items: flex-end;
+ background-color: #749C76;
+ display: flex;
+ height: 82px;
+ margin-top: -1px;
+ min-width: 360px;
+ padding: 19px, 30px;
 }
