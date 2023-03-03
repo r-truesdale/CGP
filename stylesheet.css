@@ -2,9 +2,18 @@
 
 :root {
  --font-family-convergence: "Convergence";
+ --font-family-dm_sans: "DM Sans";
 }
-
-.display {
+.display{
+ align-items: center;
+ background-color: rgba(245, 246, 246, 1);
+ border: 1px none;
+ display: flex;
+ flex-direction: column;
+ height: 800px;
+ width: 360px;
+}
+.button {
  align-items: flex-start;
  background-color: rgba(66, 93, 72, 1);
  border: 5px solid rgba(149, 165, 151, 1);
@@ -16,16 +25,6 @@
  padding:10px;
  width: fit-content;
 }
-
-.title {
- color: rgba(245, 246, 246, 1);
- font-family: var(--font-family-convergence);
- font-size: 32px;
- font-weight: 400;
- min-height: 38px;
- min-width: 296px;
-}
-
 #title-block {
  align-items: flex-end;
  background-color: #749C76;
@@ -35,3 +34,29 @@
  min-width: 360px;
  padding: 19px, 30px;
 }
+.title {
+ color: rgba(245, 246, 246, 1);
+ font-family: var(--font-family-convergence);
+ font-size: 32px;
+ font-weight: 400;
+ min-height: 38px;
+ min-width: 296px;
+ text-align: center;
+}
+
+p{
+ width:328px;
+ line-height: normal;
+ color: black;
+ font-family: var(--font-family-dm_sans);
+}
+
+#welcome{
+ font-size: large;
+font-weight: bold;
+ margin-top: 16px;
+ min-height: 62px;
+ text-align: center;
+ width: 360px;
+}
+
