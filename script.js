@@ -1,13 +1,27 @@
-// import inatjs from "inaturalistjs-main\build\inaturalistjs.js";
+    //Piexifjs
+    // Modules required for most of these exercises
+    var fs = require('fs');
+    var piexifjs = require('piexifjs');
+    
+    import { readFileSync } from 'fs';
+    import { load } from 'piexifjs';
+
+    // Handy utility functions
+    const getBase64DataFromJpegFile = filename => readFileSync(filename).toString('binary');
+    const getExifFromJpegFile = filename => load(getBase64DataFromJpegFile(filename));
+
+    //const palm1Exif = getExifFromJpegFile("./images/palm tree 1.jpg");
+    
+    // import inatjs from "inaturalistjs-main\build\inaturalistjs.js";
     // inatjs.observations.search({ taxon_id: 4 }).then( rsp => { });
     const input = document.querySelector("input");
     const output = document.querySelector("output");
+    
     let imagesArray = [];
     let currDate = new Date();
     let hoursMin = currDate.getHours() + ':' + currDate.getMinutes();
 
     //upload = document.getElementById(imgUpload);
-
     window.onload = function setup(){
         if(imagesArray.length > 0)
         {
@@ -31,7 +45,7 @@
                 <img src="${URL.createObjectURL(image)}" id="imgStar" alt="image"></img>
                 
               </div>
-              <h1 id="b1">Time:${hoursMin}</h1>
+              <h1 id="b1">Time uploaded-${hoursMin}</h1>
               `
 
         })
@@ -42,11 +56,16 @@
     }
 
     function getExif() {
+    var palm1Exif = getExifFromJpegFile(imagesArray[0]);
+    console.log(palm1Exif);
+    /*    
     var img1 = document.getElementById("imgStar");
+    console.log("Attempting to retireve Metadata");
     EXIF.getData(img1, function () {
       var MetaData = EXIF.getAllTags(this);
       console.log(JSON.stringify(MetaData, null, "\t"));
     });
+    */
   }
 
     function deleteImage(index) {
