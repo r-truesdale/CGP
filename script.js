@@ -42,20 +42,26 @@
     }
 
     function getExif() {
-        // Read the file as a binary string
+        var img1 = document.getElementById("imgStar");
+        console.log(img1);
+        EXIF.getData(img1, function() {
+            var make = EXIF.getTag(this, "Make");
+        var model = EXIF.getTag(this, "Model");
+        var makeAndModel = document.getElementById("makeAndModel");
+        makeAndModel.innerHTML = `${make} ${model}`;
+        });
 
-    const exifData = EXIF.readFromBinaryFile(getBinary(imagesArray[0]));
-    console.log(exifData);
+    // const exifData = EXIF.readFromBinaryFile(getBinary(imagesArray[0]));
+    // console.log(exifData);
 
-    const location = {
-        latitude: exifData.GPSLatitude,
-        longitude: exifData.GPSLongitude
-      };
-      const timestamp = exifData.DateTimeOriginal;
+    // const location = {
+    //     latitude: exifData.GPSLatitude,
+    //     longitude: exifData.GPSLongitude
+    //   };
+    //   const timestamp = exifData.DateTimeOriginal;
 
-      // Do something with the location and time data
-      console.log(location);
-      console.log(timestamp);
+    //   // Do something with the location and time data
+      
 
       
   }
@@ -88,25 +94,9 @@
     function B3() {  
         alert("This is button 3");  
     }    
-    function B4() {  +
+    function B4() {  
         alert("This is button 4");  
     }    
     function B5() {  
         alert("This is button 5");  
     }    
-
-    // Convert a data URL to a binary string
-function getBinary(dataUrl) {
-    const BASE64_MARKER = ';base64,';
-    const base64Index = dataUrl.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-    const base64 = dataUrl.substring(base64Index);
-    const raw = window.atob(base64);
-    const rawLength = raw.length;
-    const array = new Uint8Array(new ArrayBuffer(rawLength));
-  
-    for (let i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-    }
-  
-    return array;
-  }
