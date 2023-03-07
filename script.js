@@ -1,17 +1,3 @@
-    //Piexifjs
-    // Modules required for most of these exercises
-    var fs = require('fs');
-    var piexifjs = require('piexifjs');
-    
-    import { readFileSync } from 'fs';
-    import { load } from 'piexifjs';
-
-    // Handy utility functions
-    const getBase64DataFromJpegFile = filename => readFileSync(filename).toString('binary');
-    const getExifFromJpegFile = filename => load(getBase64DataFromJpegFile(filename));
-
-    //const palm1Exif = getExifFromJpegFile("./images/palm tree 1.jpg");
-    
     // import inatjs from "inaturalistjs-main\build\inaturalistjs.js";
     // inatjs.observations.search({ taxon_id: 4 }).then( rsp => { });
     const input = document.querySelector("input");
@@ -56,16 +42,22 @@
     }
 
     function getExif() {
-    var palm1Exif = getExifFromJpegFile(imagesArray[0]);
-    console.log(palm1Exif);
-    /*    
-    var img1 = document.getElementById("imgStar");
-    console.log("Attempting to retireve Metadata");
-    EXIF.getData(img1, function () {
-      var MetaData = EXIF.getAllTags(this);
-      console.log(JSON.stringify(MetaData, null, "\t"));
-    });
-    */
+        // Read the file as a binary string
+
+    const exifData = EXIF.readFromBinaryFile(getBinary(imagesArray[0]));
+    console.log(exifData);
+
+    const location = {
+        latitude: exifData.GPSLatitude,
+        longitude: exifData.GPSLongitude
+      };
+      const timestamp = exifData.DateTimeOriginal;
+
+      // Do something with the location and time data
+      console.log(location);
+      console.log(timestamp);
+
+      
   }
 
     function deleteImage(index) {
@@ -102,3 +94,19 @@
     function B5() {  
         alert("This is button 5");  
     }    
+
+    // Convert a data URL to a binary string
+function getBinary(dataUrl) {
+    const BASE64_MARKER = ';base64,';
+    const base64Index = dataUrl.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    const base64 = dataUrl.substring(base64Index);
+    const raw = window.atob(base64);
+    const rawLength = raw.length;
+    const array = new Uint8Array(new ArrayBuffer(rawLength));
+  
+    for (let i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+  
+    return array;
+  }
