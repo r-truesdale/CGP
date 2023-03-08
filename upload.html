@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html>
- <head>
-  <link rel="stylesheet" href="stylesheet.css">
- </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="homecss.css">
+    <title>Button Test</title>
 
- <body>
-  <div class="display">
-   <div id="title-block">
-     <h1 class="title">QM HabitApp</h1>
-   </div>
-   
-  </div>
- </body>
-</html>
+</head>
+<body>
+    
+    <button id="b2" onclick = "B2()">2</button>  
+    <button id="b3"onclick = "B3()">3</button>  
+    <button id="b4"onclick = "B4()">4</button>  
+    <button id="b5"onclick = "B5()">5</button>  
+    <br>
+    <br>
+    <form action="">
+        <label for="imgUpload">Image:</label>
+        <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic">
+        <output></output>
+        <pre>Make and model: <span id="makeAndModel"></span></pre>
+        <button id="b1" onclick = "B1()">Delete Image</button>  
+        <br>
+        <br>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="descrip">Description:</label>
+        <input type="text" id="descrip" name="descrip"><br><br>
+        <input type="submit" onclick="uploadEntry()" value="Submit">
+      </form>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <script src="exif.js"></script>
+    <script src="script.js"></script>
+    </html>
