@@ -1,4 +1,9 @@
+
+
     // import inatjs from "inaturalistjs-main\build\inaturalistjs.js";
+
+    //const EXIF = require("exif.js");
+
     // inatjs.observations.search({ taxon_id: 4 }).then( rsp => { });
     const input = document.querySelector("input");
     const output = document.querySelector("output");
@@ -42,27 +47,33 @@
     }
 
     function getExif() {
-        var img1 = document.getElementById("imgStar");
-        console.log(img1);
-        EXIF.getData(img1, function() {
+        const img = new Image();
+        img.src = document.getElementById("imgStar").src;
+        console.log(img);
+        img.onload = function()
+        {
+            const exifData = EXIF.readFromBinaryFile(getBinary(img.src));
+            console.log(EXIF.readFromBinaryFile((img.src)));
+            console.log("Testing exif again")
+            console.log(exifData);
+
+            const location = {
+                latitude: exifData.GPSLatitude,
+                longitude: exifData.GPSLongitude
+              };
+              const timestamp = exifData.DateTimeOriginal;
+        
+              // Do something with the location and time data
+              console.log("Location = " + location);
+              console.log("TimeStamp = " + timestamp);
+        }   
+
+        EXIF.getData(img, function() {
             var make = EXIF.getTag(this, "Make");
         var model = EXIF.getTag(this, "Model");
         var makeAndModel = document.getElementById("makeAndModel");
         makeAndModel.innerHTML = `${make} ${model}`;
         });
-
-    // const exifData = EXIF.readFromBinaryFile(getBinary(imagesArray[0]));
-    // console.log(exifData);
-
-    // const location = {
-    //     latitude: exifData.GPSLatitude,
-    //     longitude: exifData.GPSLongitude
-    //   };
-    //   const timestamp = exifData.DateTimeOriginal;
-
-    //   // Do something with the location and time data
-      
-
       
   }
 
@@ -100,3 +111,18 @@
     function B5() {  
         alert("This is button 5");  
     }    
+
+    function getBinary(dataUrl) {
+        const BASE64_MARKER = ';base64,';
+        const base64Index = dataUrl.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+        const base64 = dataUrl.substring(base64Index);
+        const raw = window.atob(base64);
+        const rawLength = raw.length;
+        const array = new Uint8Array(new ArrayBuffer(rawLength));
+      
+        for (let i = 0; i < rawLength; i++) {
+          array[i] = raw.charCodeAt(i);
+        }
+      
+        return array;
+      }
