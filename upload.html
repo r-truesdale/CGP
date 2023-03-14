@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,34 +10,40 @@
     <title>Button Test</title>
 
 </head>
+
 <body>
     <div class="display">
         <div id="title-block">
             <h1 class="title">QM HabitApp</h1>
-          </div>
-    <!-- <button id="b2" onclick = "B2()">2</button>  
+        </div>
+        <p id="text">Upload Your Images</p>
+        <!-- <div class="button" id="map" onclick="location.href = 'map.html'"> -->
+
+        <!-- <button id="b2" onclick = "B2()">2</button>  
     <button id="b3"onclick = "B3()">3</button>  
     <button id="b4"onclick = "B4()">4</button>  
     <button id="b5"onclick = "B5()">5</button>   -->
-    <br>
-    <br>
-    <form action="">
-        <p>Press the button below to upload the pictures you have taken! </p>
-        <label for="imgUpload">Image:</label>
-        <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic">
-        <output></output>
-        <button id="b11" onclick = "B1()">Delete Images</button> 
-        <pre>Make and model: <span id="makeAndModel"></span></pre>
-        <br>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title"><br><br>
-        <label for="descrip">Description:</label>
-        <input type="text" id="descrip" name="descrip"><br><br>
-        <input type="submit" onclick="uploadEntry()" value="Submit">
-      </form>
-     </div>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-    <script src="exif.js"></script>
-    <script src="script.js"></script>
-    </html>
+
+        <form action="">
+            <p>Press the button below to upload the pictures you have taken!</p>
+            <p>If you make a mistake, press delete to remove all of you uploaded images.</p>
+            <br>
+            <label for="imgUpload">Image:</label>
+            <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic">
+            <output></output>
+            <button id="b11" onclick="B1()">Delete</button>
+            <pre>Make and model: <span id="makeAndModel"></span></pre>
+            <br>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"><br><br>
+            <label for="descrip">Description:</label>
+            <input type="text" id="descrip" name="descrip"><br><br>
+            <input type="submit" id="submit" onclick="uploadEntry()" value="Submit">
+        </form>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+<script src="exif.js"></script>
+<script src="script.js"></script>
+
+</html>

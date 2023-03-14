@@ -102,11 +102,23 @@ position: relative;
  font-family: var(--font-family-dm_sans);
  color: rgba(245, 246, 246, 1);
  background-color: rgb(152, 71, 71);
- border: 2px solid rgb(193, 142, 142);
+ border: 0.2rem solid rgb(193, 142, 142);
  text-align: center;
  padding:0.1rem 0.3rem;
  font-weight: bold;
- font-size:medium;
+ font-size:larger;
  height: fit-content;
- border-radius: 5px;
+ border-radius: 0.5rem;
+ margin:auto;
+ display: flex;
+}
+
+#submit{
+ background-color: rgba(66, 93, 72, 1);
+ border: 0.2rem solid rgba(149, 165, 151, 1);
+ color: rgba(245, 246, 246, 1);
+ font-family: var(--font-family-dm_sans);
+ border-radius: 0.5rem;
+ margin:auto;
+ display: flex;
 }
