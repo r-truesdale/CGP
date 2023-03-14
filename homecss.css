@@ -3,8 +3,16 @@ button{
     background-color: cornflowerblue;
 }
 
-#b1{background-color: aqua;
-padding: 4px 13px;}
+/* #b1{background-color: aqua;
+padding: 4px 13px;} */
+
+   /* #b1{
+    height: fit-content;
+    font-size: small;
+   } */
+   form{
+    width: 328px;
+   }
 #b2{background-color: rgb(47, 179, 47);
     padding: 4px 13px;}
 #b3{background-color: rgb(228, 112, 18);

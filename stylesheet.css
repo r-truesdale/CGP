@@ -20,7 +20,7 @@ body{
  margin: auto;
 }
 
-.button, #b1 {
+.button{
  align-items: center;
  background-color: rgba(66, 93, 72, 1);
  border: 5px solid rgba(149, 165, 151, 1);
@@ -98,11 +98,15 @@ padding: 0.75rem;
 position: relative;
 }
 
-#b1{
+#b11{
+ font-family: var(--font-family-dm_sans);
  color: rgba(245, 246, 246, 1);
- font-weight: bold;
  background-color: rgb(152, 71, 71);
- border: 3px solid rgb(193, 142, 142);
+ border: 2px solid rgb(193, 142, 142);
  text-align: center;
- padding: 0.5rem;
+ padding:0.1rem 0.3rem;
+ font-weight: bold;
+ font-size:medium;
+ height: fit-content;
+ border-radius: 5px;
 }
