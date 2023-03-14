@@ -419,7 +419,12 @@
     }
 
     function findEXIFinJPEG(file) {
-        var dataView = new DataView(file);
+        console.log(file.buffer instanceof ArrayBuffer);
+        console.log(file.buffer);
+        // if(!(file instanceof ArrayBuffer))
+        //     return;
+        var dataView = new DataView(file.buffer);
+        
 
         if (debug) console.log("Got file of length " + file.byteLength);
         if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) {
@@ -460,6 +465,7 @@
 
     function findIPTCinJPEG(file) {
         var dataView = new DataView(file);
+        console.log("IPIC in ... " + dataView);
 
         if (debug) console.log("Got file of length " + file.byteLength);
         if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) {
