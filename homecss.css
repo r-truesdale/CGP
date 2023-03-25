@@ -3,18 +3,22 @@ button{
     background-color: cornflowerblue;
 }
 
-#b1{background-color: aqua;
-padding: 4px 13px;}
-#b2{background-color: rgb(47, 179, 47);
-    padding: 4px 13px;}
-#b3{background-color: rgb(228, 112, 18);
-padding: 4px 13px;}
-#b4{background-color: rgb(255, 36, 171);
-    padding: 4px 13px;}
-#b5{background-color: rgb(107, 83, 38);
-        padding: 4px 13px;}
-        
-output{
+/* #b1{background-color: aqua;
+padding: 4px 13px;} */
+
+/* #b1{
+    height: fit-content;
+    font-size: small;
+   } */
+form {
+    width: 328px;
+}
+
+label{
+    font-family: var(--font-family-dm_sans);
+}
+
+output {
     width: 100%;
     min-height: 150px;
     height: auto;
