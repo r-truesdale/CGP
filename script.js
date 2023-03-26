@@ -49,6 +49,7 @@
 
         img.onload = function()
         {
+            //img = convertToJPG(img);
             //Get Binary Function
             const cleanUrl = img.src.replace(/^blob:null\//, "");
 
@@ -81,6 +82,7 @@
                 longitude: exifData.GPSLongitude
               };
               console.log("Image Load End");
+              console.log(location);
 
               var meta = document.getElementById("meta");
                 meta.innerHTML = `${exifData != "false" ? "Meta Data Below" : "No metadata"}`;
@@ -100,10 +102,10 @@
                 dsd.innerHTML = `${exifData.DeviceSettingDescription}`;
 
                 var gps = document.getElementById("GPS");
-                gps.innerHTML = `${exifData.GPSInfoIFDPointer}}`;
+                gps.innerHTML = `${exifData.GPSInfoIFDPointer}`;
 
                 var locationText = document.getElementById("loc");
-                locationText.innerHTML = `${location}}`;
+                locationText.innerHTML = `${location}`;
 
                 var software = document.getElementById("software");
                 software.innerHTML = `${exifData.Software}`;
@@ -155,6 +157,47 @@
         const regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
         return regex.test(str);
       }
+      
+      function isPNGFile(file) {
+        const imageType = file.type;
+        return imageType === 'image/png';
+      }
+
+      function convertToJPG (file) {
+        var image = new Image();
+
+        image.src = file.nativeURL;
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+
+        image.onload = function(){
+          //save to temp location??
+
+          file.createWriter(function(fileWriter) {
+
+            file.onWriteEnd = function(e) {
+              console.log('Write completed.');
+            };
+
+            file.onError = function(e) {
+              console.log('Write failed: ' + e.toString());
+            };
+
+            // Create a new Blob and write it to log.txt.
+            var ui8a = convertDataURIToBinary(image);
+
+            var blob = new Blob(ui8a.buffer, {type: "image/jpeg"});
+
+            fileWriter.write(blob);
+
+          }, errorHandler);
+        };
+
+        image.src = canvas.toDataURL("image/jpg");
+        return image;
+      };
 
       function urlToBase64(url) {
         return new Promise((resolve, reject) => {
@@ -174,3 +217,5 @@
           xhr.send();
         });
       }
+
+      
