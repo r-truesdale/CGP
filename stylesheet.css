@@ -8,11 +8,11 @@
 body {
  align-items: center;
  font-family: var(--font-family-dm_sans);
+ background-color: rgba(245, 246, 246, 1);
 }
 
 .display {
  align-items: center;
- background-color: rgba(245, 246, 246, 1);
  /* border: 1px none; */
  display: flex;
  flex-direction: column;
