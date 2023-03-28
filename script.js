@@ -255,6 +255,47 @@
         image.src = canvas.toDataURL("image/jpg");
         return image;
       };
+      
+      function isPNGFile(file) {
+        const imageType = file.type;
+        return imageType === 'image/png';
+      }
+
+      function convertToJPG (file) {
+        var image = new Image();
+
+        image.src = file.nativeURL;
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+
+        image.onload = function(){
+          //save to temp location??
+
+          file.createWriter(function(fileWriter) {
+
+            file.onWriteEnd = function(e) {
+              console.log('Write completed.');
+            };
+
+            file.onError = function(e) {
+              console.log('Write failed: ' + e.toString());
+            };
+
+            // Create a new Blob and write it to log.txt.
+            var ui8a = convertDataURIToBinary(image);
+
+            var blob = new Blob(ui8a.buffer, {type: "image/jpeg"});
+
+            fileWriter.write(blob);
+
+          }, errorHandler);
+        };
+
+        image.src = canvas.toDataURL("image/jpg");
+        return image;
+      };
 
       function urlToBase64(url) {
         return new Promise((resolve, reject) => {
