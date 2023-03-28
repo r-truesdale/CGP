@@ -1,12 +1,13 @@
-    // import inatjs from "inaturalistjs-main\build\inaturalistjs.js";
-    // inatjs.observations.search({ taxon_id: 4 }).then( rsp => { });
-
     const input = document.querySelector("input");
     const output = document.querySelector("output");
     
     let imagesArray = [];
     let currDate = new Date();
-    let hoursMin = currDate.getHours() + ':' + currDate.getMinutes();
+    let hoursMin = currDate.getHours().toString().padStart(2, '0') + ':' + currDate.getMinutes().toString().padStart(2, '0')+':'+currDate.getSeconds().toString().padStart(2, '0');
+    let yrMonDay = currDate.getFullYear() + '-' + (currDate.getMonth()+1).toString().padStart(2, '0') + '-' + (currDate.getDay()).toString();
+
+    let locationTaken;
+    let timeTaken;
 
     //upload = document.getElementById(imgUpload);
     window.onload = function setup(){
@@ -25,21 +26,80 @@
         alert("Image added");
     });
 
+    function resetImages()
+    {
+      let images = "";
+        imagesArray.forEach((image, index) => {
+          images += `<div class="image">
+              <img src="${URL.createObjectURL(image)}" id="imgStar" alt="image"></img>
+              
+            </div>
+            `
+
+      })
+      output.innerHTML = images;
+    }
+
     function displayImages() {
         let images = "";
         imagesArray.forEach((image, index) => {
-            images += `<div class="image">
-                <img src="${URL.createObjectURL(image)}" id="imgStar" alt="image"></img>
-                
-              </div>
-              <h1 id="b1">Time uploaded-${hoursMin}</h1>
-              `
+          images += `<div class="image">
+              <img src="${URL.createObjectURL(image)}" id="imgStar" alt="image"></img>
+              
+            </div>
+            <p id="TU">${hoursMin}</p>
+            <p id="DU">${yrMonDay}</p>
+            <p id="TT"></p>
+            <p id="DT"></p>
+            <p id="LT"></p>
+            `
 
-        })
-        output.innerHTML = images;
-        console.log(imagesArray[0].lastModifiedDate);
+      })
+      output.innerHTML = images;
+        
         document.getElementById("imgUpload").hidden = true;
-        getExif();
+        
+        if(isPNGFile(document.getElementById("imgUpload")))
+        {
+          console.log("Uploaded a PNG");
+          getExifPNG(imagesArray[0]);
+        }
+        else
+        {
+          console.log("Uploaded else");
+          getExif();
+        }
+        
+
+        
+
+        
+    }
+
+    function getExifPNG(image)
+    {
+      console.log("Getting EXIF Data");
+       // get the EXIF metadata from the Image object
+       const exifData = EXIF.getAllTags(image);
+      
+       // get the time metadata
+       const time = exifData.DateTimeOriginal;
+       
+       // get the location metadata
+       const lat = exifData.GPSLatitude;
+       const latRef = exifData.GPSLatitudeRef;
+       const lon = exifData.GPSLongitude;
+       const lonRef = exifData.GPSLongitudeRef;
+
+       console.log(time);
+       
+       // convert the latitude and longitude metadata to decimal degrees
+       const latitude = (lat[0] + lat[1] / 60 + lat[2] / 3600) * (latRef === 'N' ? 1 : -1);
+       const longitude = (lon[0] + lon[1] / 60 + lon[2] / 3600) * (lonRef === 'E' ? 1 : -1);
+       
+       // log the time and location metadata to the console
+       console.log(`Time: ${time}`);
+       console.log(`Location: (${latitude}, ${longitude})`);
     }
 
     function getExif() {
@@ -81,37 +141,50 @@
                 latitude: exifData.GPSLatitude,
                 longitude: exifData.GPSLongitude
               };
+
               console.log("Image Load End");
               console.log(location);
 
-              var meta = document.getElementById("meta");
-                meta.innerHTML = `${exifData != "false" ? "Meta Data Below" : "No metadata"}`;
+              timeTaken = exifData.DateTimeOriginal != null ? exifData.DateTimeOriginal : exifData.DateTime;
+              locationTaken = location;
 
-                var timestamp = document.getElementById("dateTime");
-                timestamp.innerHTML = `${exifData.DateTimeOriginal != null ? exifData.DateTimeOriginal : exifData.DateTime}`;
+              var dateString;
+              var timeString;
+              var locationNorth;
+              var locationEast;
 
-                var descriptionText = document.getElementById("desc");
-                descriptionText.innerHTML = `${exifData.ImageDescription}`;
+              if(locationTaken.latitude == null)
+              {
+                console.log("no Location metadata");
+                locationNorth = 51.5241;
+                locationEast =  0.0404;
+              }
+              else
+              {
+                locationNorth = location.latitude[2];
+                locationEast = location.longitude[2];
+              }
 
-                var make = document.getElementById("make");
-                make.innerHTML = `${exifData.Make}`;
-                var model = document.getElementById("model");
-                model.innerHTML = `${exifData.Model}`;
-                
-                var dsd = document.getElementById("dsd");
-                dsd.innerHTML = `${exifData.DeviceSettingDescription}`;
+              
 
-                var gps = document.getElementById("GPS");
-                gps.innerHTML = `${exifData.GPSInfoIFDPointer}`;
+              if(timeTaken == null)
+              {
+                console.log("no Time metadata");
+                dateString = yrMonDay;
+                timeString = hoursMin;
+              }
+              else
+              {
+                var datetimeArray = timeTaken.split(' ');
+                dateString = datetimeArray[0].replace(/:/g, '-');
+                timeString = datetimeArray[1];
+              }
 
-                var locationText = document.getElementById("loc");
-                locationText.innerHTML = `${location}`;
+              
 
-                var software = document.getElementById("software");
-                software.innerHTML = `${exifData.Software}`;
-
-                var artist = document.getElementById("meta");
-                artist.innerHTML = `${exifData.Artist}`;
+              document.getElementById("TT").innerHTML = timeString;
+              document.getElementById("DT").innerHTML = dateString;
+              document.getElementById("LT").innerHTML = locationNorth +","+locationEast;
             });    //Dont add any code past this point Will Cause erroes
         
     }
@@ -119,37 +192,21 @@
 
     function deleteImage(index) {
         imagesArray.splice(index, 1);
-        displayImages();
+        resetImages();
         input.value = '';
         document.getElementById("imgUpload").hidden = false;
     }
+
 
     function deleteImage() {
-        imagesArray = '';
-        displayImages();
+        imagesArray = [];
+        resetImages();
         input.value = '';
         document.getElementById("imgUpload").hidden = false;
-    }
-
-    function uploadEntry(){
-        alert("Upload Complete");  
     }
 
     function B1() {  
         deleteImage();
-        alert("This is button 1");  
-    }    
-    function B2() {  
-        alert("This is button 2");  
-    }    
-    function B3() {  
-        alert("This is button 3");  
-    }    
-    function B4() {  
-        alert("This is button 4");  
-    }    
-    function B5() {  
-        alert("This is button 5");  
     }    
 
       function isBase64(str) {
@@ -218,4 +275,4 @@
         });
       }
 
-      
+     

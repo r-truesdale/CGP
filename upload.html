@@ -31,28 +31,21 @@
         </div>
       </div>
     </div>
-  <form action="">
-    <label for="imgUpload">Image:</label>
-    <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic">
+    <button id="B1" class="btn-delete" onclick="deleteImage()">Delete Image</button>
+  <form action="" id="form">
+    <label for="imgUpload">*Image:</label>
+    <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic" required>
     <output></output>
-    <!-- <pre>Metadata: <span id="meta"></span></pre>
-        <pre>Description: <span id="desc"></span></pre>
-        <pre>Device Setting Description: <span id="dsd"></span></pre>
-        <pre>Date and Time: <span id="dateTime"></span></pre>
-        <pre>Location: <span id="loc"></span></pre>
-        <pre>GPS Info IFD Pointer: <span id="GPS"></span></pre>
-        <pre>Make: <span id="make"></span></pre>
-        <pre>Model: <span id="model"></span></pre>
-        <pre>Software: <span id="software"></span></pre>
-        <pre>Artist: <span id="artist"></span></pre> -->
-    <button id="B1" class="btn-delete" onclick="B1()">Delete</button>
+    
+    
     <br>
     <br>
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title"><br><br>
+    <label for="title">*Title:</label>
+    <input type="text" id="title" name="title" required><br><br>
     <label for="descrip">Description:</label>
     <input type="text" id="descrip" name="descrip"><br><br>
-    <input type="submit" id="btn-submit" onclick="uploadEntry()" value="Submit">
+    <input type="submit" id="btn-submit" value="Submit">
+    <input type="button" id="b1" value="Delete">
   </form>
   <p id="txt-map">Press below you want to see the current map </p>
   <div class="button" id="btn-map" onclick="location.href = 'map.html'">
@@ -73,7 +66,7 @@
   </div>
   </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+<!-- <script src="exif.min.js"></script> -->
 <script src="exif.js"></script>
 <script src="script.js"></script>
 <script>
@@ -92,6 +85,166 @@
       modal.style.display = "none";
     }
   } 
+
+  
+</script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA_kojUp7JbkEhVopquwm1iEZ726dbpnNA",
+    authDomain: "qm-habitapp.firebaseapp.com",
+    databaseURL: "https://qm-habitapp-default-rtdb.firebaseio.com",
+    projectId: "qm-habitapp",
+    storageBucket: "qm-habitapp.appspot.com",
+    messagingSenderId: "560401229086",
+    appId: "1:560401229086:web:4217b16f9678ffd811d50f",
+    measurementId: "G-LL3PSHXV7Z"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  //const storage = getStorage(app);
+  
+  import {getDatabase, ref, get, set, child, update, remove, push}
+  from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+
+  import { getStorage, ref as sRef, uploadBytes, getDownloadURL } 
+  from "https://www.gstatic.com/firebasejs/9.18.0/firebase-storage.js";
+
+  const db = getDatabase();
+
+  const storage = getStorage();
+  const storageRef = sRef(storage, "uploads");
+
+  //var locationUploaded = document.getElementById("imgStar");
+
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Check if all required fields have a value
+    var requiredFields = document.querySelectorAll('[required]');
+    var filledFields = 0;
+    requiredFields.forEach(function(field) {
+      if (field.value) {
+        filledFields++;
+      }
+    });
+    if (filledFields !== requiredFields.length) {
+      // If not all required fields are filled, prevent form submission
+      alert('Please fill in all required fields.');
+    }
+    else
+    {
+      UploadData();
+
+      document.getElementById("imgUpload").hidden = false;
+    }
+    
+  });
+
+  function UploadData(){
+    var title = document.getElementById("title");
+    console.log(title.value);
+    var description = document.getElementById("descrip");
+    var pic = document.getElementById("imgStar").src;
+    var dateTaken = document.getElementById("DT");
+    var dateUploaded = document.getElementById("DU");
+    var timeTaken = document.getElementById("TT");
+    var timeUploaded = document.getElementById("TU");
+    var locationTaken = document.getElementById("LT");
+
+    const input = document.querySelector("input");
+    const file = input.files[0];
+
+    const fileName = Math.random().toString(36).substring(2) + Date.now().toString() + '.' + input.files[0].name.split('.').pop()
+    const metadata = {
+      contentType: file.type
+    };
+    const imageRef = sRef(storageRef, fileName);
+
+    uploadBytes(imageRef, file, metadata)
+      .then(() => {
+        console.log("Image uploaded successfully!");
+        return getDownloadURL(imageRef);
+      })     
+    .then((url) => {
+      console.log("Getting Image URL");
+      console.log("Image URL: ", url);
+      console.log(title.value);
+      // Store the URL in your Realtime Database or Firestore document
+      //Do FireBase Database here...
+      const dataRef = ref(db, "data");
+
+      const newDataRef = push(dataRef, {
+        // Title: title.value,
+        // Description: description.value,
+       
+      });
+
+      set(newDataRef, {
+        Title: title.value,
+        Description: description.value,
+        ImageURL: url,
+        DateTaken: dateTaken.innerHTML,
+        DateUploaded: dateUploaded.innerHTML,
+        TimeTaken: timeTaken.innerHTML,
+        TimeUploaded: timeUploaded.innerHTML,
+        LocationTaken: locationTaken.innerHTML,
+      }).then(() => {
+        console.log("New data added!");
+        location.reload();
+      }).catch((error) => {
+        console.error("Error adding new user: ", error);
+      }); 
+    })
+    .catch((error) => {
+      console.error("Error getting image URL: ", error);
+    });
+
+
+   
+  }
+
+  
+
+//   function storageFire(){
+//      // Get the file
+//      var file = document.getElementById('imgUpload').files[0];
+
+// // Create a new unique file name for the image
+// var fileName = Math.random().toString(36).substring(2) + Date.now().toString() + '.' + file.name.split('.').pop();
+
+// // Upload the file to Firebase Storage
+// var uploadTask = storage.child('images/' + fileName).put(file);
+
+// // Monitor the upload progress
+// uploadTask.on('state_changed', function(snapshot){
+//   // Show the upload progress
+//   var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//   console.log('Upload is ' + progress + '% done');
+// }, function(error) {
+//   // Handle upload error
+//   console.log(error);
+// }, function() {
+//   // Handle successful upload
+//   console.log('File uploaded successfully');
+  
+//   // Get the download URL for the file
+//   uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+//     // Save the download URL to Firebase Realtime Database
+//     db.push({ url: downloadURL });
+//     console.log('Download URL saved to database');
+//   });
+// });
+//   }
 </script>
 
 </html>
