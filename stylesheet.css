@@ -67,7 +67,7 @@ body {
 }
 
 #map.button {
- margin-bottom: 2vh;
+ margin: 10vh auto;
 }
 
 #title-block {
@@ -76,7 +76,7 @@ body {
  /* display: flex; */
  height: 10vh;
  width: 100%;
- padding: 2vh;
+ padding: 0vh;
  /* margin: 0; */
  top: 0;
  text-align: center;
@@ -157,8 +157,9 @@ p {
  transform: translateY(0.5vh);
  border: 0;
 }
-
-
+#upload{
+ margin-top: 10vh;
+}
 svg {
  height: 5vh;
  width: 6vh;
@@ -194,10 +195,15 @@ svg {
 }
 
 output .image {
+ height: 90%;
  align-self: center;
- display: inline-block;
+ /* display: inline-block; */
  margin: 1vh auto;
  padding: auto;
+}
+
+#form{
+ margin: auto;
 }
 
 #txt-map {
@@ -206,20 +212,20 @@ output .image {
 
 #btn-map,
 #btn-home {
- margin: 1vh 7vw;
+ margin: 1vh 3vw;
  display: inline-flex;
  /* border: #8bab83 0.4vh solid; */
  color: #002300;
  background: #f8fef6;
  border-radius: 2.5vh;
- padding: 1vh 6vh;
+ padding: 1vh 10vw;
  margin-top: 1vh;
 }
 #btn-map{
- float: left;
+ /* float: left; */
 }
 #btn-home{
- float: right;
+ /* float: right; */
 }
 #map-svg,
 #home-svg {
@@ -244,6 +250,11 @@ output .image {
  margin-top: -1vh;
  margin-right: -2vh;
  float: right;
+}
+
+#btn-popup{
+ margin:10vh auto;
+ padding-left:2vh;
 }
 
 #help {
@@ -294,8 +305,8 @@ output .image {
  background-color: #fefefe;
  margin: auto;
  padding: 0;
- width: 85vw;
- height: 70vh;
+ width: 90vw;
+ height: 85vh;
  box-shadow: 0 0.6vh 1.1vh 0 rgba(0, 0, 0, 0.2), 0 0.9vh 2.8vh 0 rgba(0, 0, 0, 0.19);
  -webkit-animation-name: animatetop;
  -webkit-animation-duration: 0.4s;
@@ -400,7 +411,7 @@ footer {
  color: white;
  text-align: center;
  height: 10vh;
- padding: 2vh 1vh;
+ padding: 2vh 0vh;
  margin: 0;
  top: 100vh;
  box-shadow: 0 0.6vh 1.1vh 0 rgba(18, 32, 18, 0.2), 0 0.9vh 2.8vh 0 rgba(0, 0, 0, 0.19);
