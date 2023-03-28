@@ -17,53 +17,85 @@
     <div id="title-block">
       <h1 class="title">QM HabitApp</h1>
     </div>
-    <p id="welcome">Upload Your Images!</p>
-    <button id="btn-info">Info</button>
-    <div id="modal">
-      <div id="modal-content">
-        <div id="modal-header">
-          <span class="close">&times;</span>
-          <h2 id="info">How to use</h2>
-        </div>
-        <div id="modal-body">
-          <p id="text">Press the button below to upload the pictures you have taken!</p>
-          <p id="text">Pressing delete to remove all of you uploaded images.</p>
+    <div id="content">
+      <header>
+        <button id="btn-info">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="help" fill="none">
+            <path fill="none" d="M0 0h24v24H0V0z"></path>
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z">
+            </path>
+          </svg>
+        </button>
+        <p id="welcome" class="upload-page">Upload Your Images!</p>
+      </header>
+      <div id="modal">
+        <div id="modal-content">
+          <div id="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="info">How to upload?</h2>
+          </div>
+          <div id="modal-body">
+            <p id="text">Go to your camera and take a photo of any plants, animals or insects you can see.</p>
+            <p id="text">Press the upload button to choose your images</p>
+            <p id="text">If you make a mistake, the delete button will remove all photos you have uploaded</p>
+            <p id="text">Press the submit button after you're happy with the photos you've chosen!</p>
+
+
+          </div>
         </div>
       </div>
-    </div>
+    <br>
     <button id="B1" class="btn-delete" onclick="deleteImage()">Delete Image</button>
+    <br>
   <form action="" id="form">
     <label for="imgUpload">*Image:</label>
-    <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic" required>
+    <input class="input-img" type="file" id="imgUpload" name="imgUpload"
+          accept="image/jpeg, image/png, image/jpg, image/heic" required>
     <output></output>
     
     
     <br>
     <br>
-    <label for="title">*Title:</label>
-    <input type="text" id="title" name="title" required><br><br>
-    <label for="descrip">Description:</label>
-    <input type="text" id="descrip" name="descrip"><br><br>
+    <div id="title-desc">
+      <div id="img-title">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title"><br><br>
+      </div>
+      <div id="img-desc">
+        <label for="descrip">Description:</label>
+        <input type="text" id="descrip" name="descrip"><br><br>
+      </div>
+    </div>
     <input type="submit" id="btn-submit" value="Submit">
-    <input type="button" id="b1" value="Delete">
   </form>
-  <p id="txt-map">Press below you want to see the current map </p>
-  <div class="button" id="btn-map" onclick="location.href = 'map.html'">
-    <svg id='map-svg' xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 42 42" fill="none">
-      <a href="map.html">
-        <path d="M0 0H42V42H0V0Z" fill="white" fill-opacity="0.01" />
-        <path
-          d="M3.5 5.25L4.23336 3.66107C3.69149 3.41098 3.05953 3.45428 2.55683 3.77592C2.05413 4.09756 1.75 4.65321 1.75 5.25H3.5ZM3.5 31.5H1.75C1.75 32.1826 2.14688 32.8029 2.76665 33.0889L3.5 31.5ZM14.875 36.75L14.1417 38.3389C14.6836 38.589 15.3155 38.5458 15.8182 38.2241C16.3209 37.9025 16.625 37.3468 16.625 36.75H14.875ZM14.875 10.5H16.625C16.625 9.81742 16.2281 9.19713 15.6083 8.91109L14.875 10.5ZM2.76665 33.0889L14.1417 38.3389L15.6083 35.1611L4.23336 29.9111L2.76665 33.0889ZM15.6083 8.91109L4.23336 3.66107L2.76665 6.83893L14.1417 12.0889L15.6083 8.91109ZM13.125 10.5V36.75H16.625V10.5H13.125ZM5.25 31.5V5.25H1.75V31.5H5.25Z"
-          fill="#F5F6F6" />
-        <path
-          d="M14.875 36.75H13.125C13.125 37.3383 13.4206 37.8872 13.9116 38.211C14.4028 38.5348 15.0237 38.5902 15.5643 38.3585L14.875 36.75ZM27.125 31.5L27.8143 33.1085C28.4578 32.8327 28.875 32.2001 28.875 31.5H27.125ZM27.125 5.25001H28.875C28.875 4.66175 28.5794 4.11287 28.0884 3.78904C27.5972 3.46521 26.9763 3.40978 26.4357 3.6415L27.125 5.25001ZM14.875 10.5L14.1857 8.89149C13.5422 9.16729 13.125 9.79992 13.125 10.5H14.875ZM15.5643 38.3585L27.8143 33.1085L26.4357 29.8915L14.1857 35.1415L15.5643 38.3585ZM26.4357 3.6415L14.1857 8.89149L15.5643 12.1085L27.8143 6.85851L26.4357 3.6415ZM28.875 31.5V5.25001H25.375V31.5H28.875ZM13.125 10.5V36.75H16.625V10.5H13.125Z"
-          fill="#F5F6F6" />
-        <path
-          d="M27.125 31.5H25.375C25.375 32.1826 25.7719 32.8029 26.3917 33.0889L27.125 31.5ZM38.5 36.75L37.7667 38.3389C38.3086 38.589 38.9405 38.5458 39.4432 38.2241C39.9459 37.9025 40.25 37.3468 40.25 36.75H38.5ZM38.5 10.5H40.25C40.25 9.81742 39.8531 9.19713 39.2333 8.91109L38.5 10.5ZM27.125 5.25L27.8583 3.66107C27.3165 3.41098 26.6845 3.45428 26.1818 3.77592C25.6792 4.09756 25.375 4.65321 25.375 5.25H27.125ZM26.3917 33.0889L37.7667 38.3389L39.2333 35.1611L27.8583 29.9111L26.3917 33.0889ZM39.2333 8.91109L27.8583 3.66107L26.3917 6.83893L37.7667 12.0889L39.2333 8.91109ZM36.75 10.5V36.75H40.25V10.5H36.75ZM28.875 31.5V5.25H25.375V31.5H28.875Z"
-          fill="#F5F6F6" />
-      </a>
-    </svg>
-  </div>
+  <!-- <p id="txt-map">Press below you want to see the current map </p> -->
+  <footer>
+    <div class="button" id="btn-map" onclick="location.href = 'map.html'">
+      <svg id='map-svg' xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 42 42" fill="none">
+        <a href="map.html">
+          <path d="M0 0H42V42H0V0Z" fill="white" fill-opacity="0.01" />
+          <path
+            d="M3.5 5.25L4.23336 3.66107C3.69149 3.41098 3.05953 3.45428 2.55683 3.77592C2.05413 4.09756 1.75 4.65321 1.75 5.25H3.5ZM3.5 31.5H1.75C1.75 32.1826 2.14688 32.8029 2.76665 33.0889L3.5 31.5ZM14.875 36.75L14.1417 38.3389C14.6836 38.589 15.3155 38.5458 15.8182 38.2241C16.3209 37.9025 16.625 37.3468 16.625 36.75H14.875ZM14.875 10.5H16.625C16.625 9.81742 16.2281 9.19713 15.6083 8.91109L14.875 10.5ZM2.76665 33.0889L14.1417 38.3389L15.6083 35.1611L4.23336 29.9111L2.76665 33.0889ZM15.6083 8.91109L4.23336 3.66107L2.76665 6.83893L14.1417 12.0889L15.6083 8.91109ZM13.125 10.5V36.75H16.625V10.5H13.125ZM5.25 31.5V5.25H1.75V31.5H5.25Z"
+            fill="#002300" />
+          <path
+            d="M14.875 36.75H13.125C13.125 37.3383 13.4206 37.8872 13.9116 38.211C14.4028 38.5348 15.0237 38.5902 15.5643 38.3585L14.875 36.75ZM27.125 31.5L27.8143 33.1085C28.4578 32.8327 28.875 32.2001 28.875 31.5H27.125ZM27.125 5.25001H28.875C28.875 4.66175 28.5794 4.11287 28.0884 3.78904C27.5972 3.46521 26.9763 3.40978 26.4357 3.6415L27.125 5.25001ZM14.875 10.5L14.1857 8.89149C13.5422 9.16729 13.125 9.79992 13.125 10.5H14.875ZM15.5643 38.3585L27.8143 33.1085L26.4357 29.8915L14.1857 35.1415L15.5643 38.3585ZM26.4357 3.6415L14.1857 8.89149L15.5643 12.1085L27.8143 6.85851L26.4357 3.6415ZM28.875 31.5V5.25001H25.375V31.5H28.875ZM13.125 10.5V36.75H16.625V10.5H13.125Z"
+            fill="#002300" />
+          <path
+            d="M27.125 31.5H25.375C25.375 32.1826 25.7719 32.8029 26.3917 33.0889L27.125 31.5ZM38.5 36.75L37.7667 38.3389C38.3086 38.589 38.9405 38.5458 39.4432 38.2241C39.9459 37.9025 40.25 37.3468 40.25 36.75H38.5ZM38.5 10.5H40.25C40.25 9.81742 39.8531 9.19713 39.2333 8.91109L38.5 10.5ZM27.125 5.25L27.8583 3.66107C27.3165 3.41098 26.6845 3.45428 26.1818 3.77592C25.6792 4.09756 25.375 4.65321 25.375 5.25H27.125ZM26.3917 33.0889L37.7667 38.3389L39.2333 35.1611L27.8583 29.9111L26.3917 33.0889ZM39.2333 8.91109L27.8583 3.66107L26.3917 6.83893L37.7667 12.0889L39.2333 8.91109ZM36.75 10.5V36.75H40.25V10.5H36.75ZM28.875 31.5V5.25H25.375V31.5H28.875Z"
+            fill="#002300" />
+        </a>
+      </svg>
+    </div>
+    <div class="button" id="btn-home" onclick="location.href = 'index.html'">
+      <svg id='home-svg' xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0.5 24 24" id="home">
+        <path fill="none" stroke="#002300" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023"
+          transform="translate(2.5 2)">
+        </path>
+      </svg>
+    </div>
+  </footer>
   </div>
 </body>
 <!-- <script src="exif.min.js"></script> -->
@@ -85,8 +117,6 @@
       modal.style.display = "none";
     }
   } 
-
-  
 </script>
 <script type="module">
   // Import the functions you need from the SDKs you need
@@ -212,84 +242,5 @@
 
    
   }
-
-  
-
-//   function storageFire(){
-//      // Get the file
-//      var file = document.getElementById('imgUpload').files[0];
-
-// // Create a new unique file name for the image
-// var fileName = Math.random().toString(36).substring(2) + Date.now().toString() + '.' + file.name.split('.').pop();
-
-// // Upload the file to Firebase Storage
-// var uploadTask = storage.child('images/' + fileName).put(file);
-
-// // Monitor the upload progress
-// uploadTask.on('state_changed', function(snapshot){
-//   // Show the upload progress
-//   var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//   console.log('Upload is ' + progress + '% done');
-// }, function(error) {
-//   // Handle upload error
-//   console.log(error);
-// }, function() {
-//   // Handle successful upload
-//   console.log('File uploaded successfully');
-  
-//   // Get the download URL for the file
-//   uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-//     // Save the download URL to Firebase Realtime Database
-//     db.push({ url: downloadURL });
-//     console.log('Download URL saved to database');
-//   });
-// });
-//   }
 </script>
-
 </html>
-
-<!-- <body>
-    <div class="display">
-        <div id="title-block">
-            <h1 class="title">QM HabitApp</h1>
-        </div>
-        <p id="welcome">Upload Your Pictures!</p>
-
-        <form action="">
-            <p id="text">Press the button below to upload the pictures you have taken!</p>
-            <p id="text">If you make a mistake, press delete to remove all of you uploaded images.</p>
-            <br>
-            <label for="imgUpload">Image:</label>
-            <input type="file" id="imgUpload" name="imgUpload" accept="image/jpeg, image/png, image/jpg, image/heic">
-            <output></output>
-            <button class='button' id="btn-delete" onclick="B1()">Delete</button>
-            <pre>Make and model: <span id="makeAndModel"></span></pre>
-            <br>
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title"><br><br>
-            <label for="descrip">Description:</label>
-            <input type="text" id="descrip" name="descrip"><br><br>
-            <input type="submit" class='button' id="btn-submit" onclick="uploadEntry()" value="Submit">
-        </form>
-        <p id="txt-map">Press below you want to see the current map </p>
-        <div class="button" id="btn-map" onclick="location.href = 'map.html'">
-            <svg id='map-svg' xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 42 42" fill="none">
-                <a href="map.html">
-                    <path d="M0 0H42V42H0V0Z" fill="white" fill-opacity="0.01" />
-                    <path
-                        d="M3.5 5.25L4.23336 3.66107C3.69149 3.41098 3.05953 3.45428 2.55683 3.77592C2.05413 4.09756 1.75 4.65321 1.75 5.25H3.5ZM3.5 31.5H1.75C1.75 32.1826 2.14688 32.8029 2.76665 33.0889L3.5 31.5ZM14.875 36.75L14.1417 38.3389C14.6836 38.589 15.3155 38.5458 15.8182 38.2241C16.3209 37.9025 16.625 37.3468 16.625 36.75H14.875ZM14.875 10.5H16.625C16.625 9.81742 16.2281 9.19713 15.6083 8.91109L14.875 10.5ZM2.76665 33.0889L14.1417 38.3389L15.6083 35.1611L4.23336 29.9111L2.76665 33.0889ZM15.6083 8.91109L4.23336 3.66107L2.76665 6.83893L14.1417 12.0889L15.6083 8.91109ZM13.125 10.5V36.75H16.625V10.5H13.125ZM5.25 31.5V5.25H1.75V31.5H5.25Z"
-                        fill="#F5F6F6" />
-                    <path
-                        d="M14.875 36.75H13.125C13.125 37.3383 13.4206 37.8872 13.9116 38.211C14.4028 38.5348 15.0237 38.5902 15.5643 38.3585L14.875 36.75ZM27.125 31.5L27.8143 33.1085C28.4578 32.8327 28.875 32.2001 28.875 31.5H27.125ZM27.125 5.25001H28.875C28.875 4.66175 28.5794 4.11287 28.0884 3.78904C27.5972 3.46521 26.9763 3.40978 26.4357 3.6415L27.125 5.25001ZM14.875 10.5L14.1857 8.89149C13.5422 9.16729 13.125 9.79992 13.125 10.5H14.875ZM15.5643 38.3585L27.8143 33.1085L26.4357 29.8915L14.1857 35.1415L15.5643 38.3585ZM26.4357 3.6415L14.1857 8.89149L15.5643 12.1085L27.8143 6.85851L26.4357 3.6415ZM28.875 31.5V5.25001H25.375V31.5H28.875ZM13.125 10.5V36.75H16.625V10.5H13.125Z"
-                        fill="#F5F6F6" />
-                    <path
-                        d="M27.125 31.5H25.375C25.375 32.1826 25.7719 32.8029 26.3917 33.0889L27.125 31.5ZM38.5 36.75L37.7667 38.3389C38.3086 38.589 38.9405 38.5458 39.4432 38.2241C39.9459 37.9025 40.25 37.3468 40.25 36.75H38.5ZM38.5 10.5H40.25C40.25 9.81742 39.8531 9.19713 39.2333 8.91109L38.5 10.5ZM27.125 5.25L27.8583 3.66107C27.3165 3.41098 26.6845 3.45428 26.1818 3.77592C25.6792 4.09756 25.375 4.65321 25.375 5.25H27.125ZM26.3917 33.0889L37.7667 38.3389L39.2333 35.1611L27.8583 29.9111L26.3917 33.0889ZM39.2333 8.91109L27.8583 3.66107L26.3917 6.83893L37.7667 12.0889L39.2333 8.91109ZM36.75 10.5V36.75H40.25V10.5H36.75ZM28.875 31.5V5.25H25.375V31.5H28.875Z"
-                        fill="#F5F6F6" />
-                </a>
-            </svg>
-        </div>
-    </div>
-</body>
-
-</html> -->
