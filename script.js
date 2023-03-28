@@ -47,11 +47,11 @@
               <img src="${URL.createObjectURL(image)}" id="imgStar" alt="image"></img>
               
             </div>
-            <p id="TU">${hoursMin}</p>
-            <p id="DU">${yrMonDay}</p>
-            <p id="TT"></p>
-            <p id="DT"></p>
-            <p id="LT"></p>
+            <p id="TU" hidden>${hoursMin}</p>
+            <p id="DU" hidden>${yrMonDay}</p>
+            <p id="TT" hidden></p>
+            <p id="DT" hidden></p>
+            <p id="LT" hidden></p>
             `
 
       })

@@ -45,16 +45,13 @@
           </div>
         </div>
       </div>
-    <br>
-    <button id="B1" class="btn-delete" onclick="deleteImage()">Delete Image</button>
-    <br>
+
   <form action="" id="form">
-    <label for="imgUpload">*Image:</label>
+    <label id="img-label" for="imgUpload">*Image:</label>
     <input class="input-img" type="file" id="imgUpload" name="imgUpload"
           accept="image/jpeg, image/png, image/jpg, image/heic" required>
-    <output></output>
-    
-    
+    <output></output>   
+    <button id="btn-delete" class="" onclick="deleteImage()">Delete Image</button>
     <br>
     <br>
     <div id="title-desc">
@@ -67,8 +64,9 @@
         <input type="text" id="descrip" name="descrip"><br><br>
       </div>
     </div>
-    <input type="submit" id="btn-submit" value="Submit">
+    <input type="submit" class="button" id="submit" value="Submit">
   </form>
+</div>
   <!-- <p id="txt-map">Press below you want to see the current map </p> -->
   <footer>
     <div class="button" id="btn-map" onclick="location.href = 'map.html'">
