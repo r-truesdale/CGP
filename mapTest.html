@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive Map</title>
+  <style>
+    #map {
+      height: 500px;
+    }
+    #container {
+        width: 400px;
+        height: 300px;
+      }
+  </style>
+</head>
+<body>
+  <div id="map">
+    <div id="container"></div>
+</div>
+</body>
+<script type='module'>
+    import * as THREE from './node_modules/three/build/three.module.js';
+    import { OBJLoader } from '../node_modules/three/examples/jsm/loaders/OBJLoader.js';
+import { OrbitControls } from '../node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+
+
+const container = document.getElementById('container');
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+
+//Gradient Background
+const canvas = document.createElement('canvas');
+canvas.width = 256;
+canvas.height = 256;
+const context = canvas.getContext('2d');
+const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
+gradient.addColorStop(0, '#cfd9df');
+gradient.addColorStop(1, '#e2ebf0');
+context.fillStyle = gradient;
+context.fillRect(0, 0, canvas.width, canvas.height);
+const texture = new THREE.CanvasTexture(canvas);
+scene.background = texture;
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(0, 10, 0);
+scene.add(directionalLight);
+
+directionalLight.castShadow = true;
+
+directionalLight.shadow.mapSize.width = 2048;
+directionalLight.shadow.mapSize.height = 2048;
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 500;
+
+directionalLight.shadow.cameraVisible = true;
+directionalLight.shadow.bias = 0.001;
+
+// Load the OBJ file
+const loader = new OBJLoader();
+const textureLoader = new THREE.TextureLoader();
+loader.load('qm campus.obj', function (obj) {
+
+    obj.scale.set(10, 10, 10); // Scale the object
+    
+    const boundingBox = new THREE.Box3().setFromObject(obj); // Compute bounding box
+    const center = new THREE.Vector3();
+    boundingBox.getCenter(center); // Get center of bounding box
+    
+    obj.position.sub(center); 
+    console.log(center);// Shift object to center at origin
+    
+     // Create a pivot point
+    const pivot = new THREE.Object3D();
+    pivot.position.copy(center);
+    scene.add(pivot);
+    pivot.add(obj); // Add the object to the pivot point
+    
+    obj.traverse((child) => {
+    if (child instanceof THREE.Mesh) {
+    const texture = textureLoader.load('textures/Solid_grey.svg.png');
+    child.material = new THREE.MeshPhongMaterial({ map: texture });
+    child.castShadow = true; // Enable casting of shadows by this mesh
+    child.receiveShadow = true; // Enable receiving of shadows by this mesh
+    }
+});
+});
+
+      
+camera.position.z = 5;
+
+function animate() {
+    requestAnimationFrame(animate);
+    // // Rotate the object
+    // scene.children.forEach(child => {
+    //     if(child instanceof THREE.Object3D){
+    //       child.rotation.x += 0.00;
+    //       child.rotation.y += 0.001;
+    //     }
+    //     });
+    renderer.render(scene, camera);
+}
+animate();
+
+// function createAMarker()
+// {
+//     // Create a new mesh object for the marker
+//     const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+//     const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+//     const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+
+//     // Position the marker in the scene
+//     markerMesh.position.set(0, 0, 0);
+//     scene.add(markerMesh);
+
+//     // Add a click event listener to the marker
+//     markerMesh.addEventListener('click', () => {
+//     // Perform the desired action when the marker is clicked
+//     console.log('Marker clicked!');
+//     });
+// }
+//Create a new mesh object for the marker
+    const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+    const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+
+    // Position the marker in the scene
+    markerMesh.position.set(0 - (2*0.00041169835), -0.05, 4-(4*0.2145009288));
+    console.log(markerMesh.position);
+    markerMesh.scale.set(0.5,0.5,0.5);
+    scene.add(markerMesh);
+
+    // Add a click event listener to the marker
+    markerMesh.addEventListener('click', () => {
+    // Perform the desired action when the marker is clicked
+    console.log('Marker clicked!');
+    });
+</script>
+</html>
