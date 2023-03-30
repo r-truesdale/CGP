@@ -274,8 +274,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebas
         const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
 
         // Position the marker in the scene
-        markerMesh.position.set(0 - (2*xCord), -0.05, 4-(4*yCord));
+        markerMesh.position.set(0 + (2*xCord), -0.05, 4-(4*yCord));
         console.log(markerMesh.position);
+        console.log(yCord);
         markerMesh.scale.set(size,size,size);
         scene.add(markerMesh);
 
