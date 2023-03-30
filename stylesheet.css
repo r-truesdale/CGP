@@ -5,7 +5,7 @@
 :root {
     --font-family-convergence: "Convergence";
     --font-family-dm_sans: "DM Sans";
-    --font-family-epilogue:"Epilogue";
+    --font-family-epilogue: "Epilogue";
 }
 
 html,
@@ -104,13 +104,14 @@ body {
 
 .title {
     color: rgba(245, 246, 246, 1);
-    font-family: var(--font-family-convergence);
+    font-family: var(--font-family-epilogue);
     font-size: 6vh;
     height: 10vh;
     width: 100vw;
     font-weight: 3vh;
     text-shadow: 0rem 0.3rem 0.3rem #00000040;
-    padding: 1vh;
+    /* padding: 2vh; */
+    padding-top:2vh;
     margin-top: 1vh;
 }
 
@@ -136,6 +137,7 @@ p {
     width: 90vw;
     line-height: normal;
     color: black;
+    
 }
 
 #text {
@@ -169,10 +171,11 @@ p {
     padding-top: 1vh;
 }
 
-#counter{
+#counter {
     font-size: 4vh;
     font-weight: bold;
 }
+
 #img-label:active,
 #btn-delete:active,
 #submit:active {
@@ -279,7 +282,8 @@ output .image {
     float: right;
 }
 
-#btn-popup, #btn-popup2 {
+#btn-popup,
+#btn-popup2 {
     margin: 10vh auto;
     padding-left: 2vh;
 }
@@ -302,7 +306,8 @@ output .image {
 }
 
 
-#modal, #modal2 {
+#modal,
+#modal2, #modal3 {
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -327,7 +332,8 @@ output .image {
 }
 
 /* Modal Content */
-#modal-content, #modal-content2 {
+#modal-content,
+#modal-content2 {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -342,9 +348,10 @@ output .image {
     animation-duration: 0.4s;
 }
 
-#modal-content p, #modal-content2 p {
+#modal-content p,
+#modal-content2 p {
     font-size: 3vh;
-    text-align:left;
+    text-align: left;
     width: auto;
 }
 
@@ -352,7 +359,8 @@ input#title,
 input#descrip {
     height: 2.5vh;
 }
-select#category{
+
+select#category {
     height: 3vh;
 }
 
@@ -404,7 +412,8 @@ select#category{
 }
 
 /* The Close Button */
-.close, .close2 {
+.close,
+.close2, .close3 {
     color: white;
     float: right;
     font-size: 8vh;
@@ -413,15 +422,18 @@ select#category{
 }
 
 .close:hover,
-.close:focus, 
+.close:focus,
 .close2:hover,
-.close2:focus {
+.close2:focus,
+.close3:hover,
+.close3:focus {
     color: #bcebf1;
     text-decoration: none;
     cursor: pointer;
 }
 
-#modal-header, #modal-header2 {
+#modal-header,
+#modal-header2 {
     padding: 0.3vh 2vh;
     background-color: #39656b;
     color: #ffffff;
@@ -433,9 +445,11 @@ h2#info {
     font-size: 5vh;
 }
 
-#modal-body, #modal-body2 {
+#modal-body,
+#modal-body2 {
     padding: 0.3vh 2.3vh;
 }
+
 
 footer {
     position: sticky;
@@ -458,7 +472,7 @@ footer {
     height: 35vh;
     bottom: 0;
     /* position: relative; */
-    margin:auto;
+    margin: auto;
     margin-bottom: 0vh;
     margin-top: 3vh;
 
@@ -480,14 +494,14 @@ footer {
 
 .prev,
 .next {
+    color: rgba(245, 246, 246, 1);
     cursor: pointer;
     background-color: #118C5B;
     width: 25vw;
     height: 6vh;
     margin: auto;
-    color: rgb(32, 22, 22);
     font-weight: bold;
-    font-size: 2.3vh;
+    font-size: 4vh;
     transition: 0.6s ease;
     border-radius: 0.6vh;
     border: none;
@@ -496,6 +510,10 @@ footer {
     /* margin-top:-30vh; */
     bottom: 0;
     /* box-sizing: content-box; */
+}
+
+#modal-img{
+    width: 90vw;
 }
 
 /* Position the "next button" to the right */
@@ -512,11 +530,12 @@ footer {
 .prev:hover,
 .next:hover {
     background-color: #4de9aa;
+    color: rgb(25, 26, 26);
 }
 
-#slide-img {
+#slide-img2, #slide-img1 {
     height: fit-content;
-    width:100%;
+    width: 100%;
     margin: auto;
     vertical-align: middle;
     /* align-self: auto; */
@@ -579,7 +598,7 @@ footer {
     }
 }
 
-div.slide.fade{
+div.slide.fade {
     text-align: center;
     display: flex;
     margin: auto;
