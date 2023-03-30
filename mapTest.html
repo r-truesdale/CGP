@@ -11,6 +11,11 @@
         width: 300px;
         height: 500px;
       }
+
+      #display-img{
+        width: 50px;
+        height: auto;
+      }
   </style>
 </head>
 <body>
@@ -22,8 +27,6 @@
     import * as THREE from './node_modules/three/build/three.module.js';
     import { OBJLoader } from '../node_modules/three/examples/jsm/loaders/OBJLoader.js';
 import { OrbitControls } from '../node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-
 
 const container = document.getElementById('container');
 
@@ -48,6 +51,7 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 const texture = new THREE.CanvasTexture(canvas);
 scene.background = texture;
 
+//Lighting
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(0, 10, 0);
 scene.add(directionalLight);
@@ -125,21 +129,162 @@ animate();
 //     console.log('Marker clicked!');
 //     });
 // }
-//Create a new mesh object for the marker
-    const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
-    const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
 
-    // Position the marker in the scene
-    markerMesh.position.set(0 - (2*0.00041169835), -0.05, 4-(4*0.2145009288));
-    console.log(markerMesh.position);
-    markerMesh.scale.set(0.5,0.5,0.5);
-    scene.add(markerMesh);
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Add a click event listener to the marker
-    markerMesh.addEventListener('click', () => {
-    // Perform the desired action when the marker is clicked
-    console.log('Marker clicked!');
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA_kojUp7JbkEhVopquwm1iEZ726dbpnNA",
+    authDomain: "qm-habitapp.firebaseapp.com",
+    databaseURL: "https://qm-habitapp-default-rtdb.firebaseio.com",
+    projectId: "qm-habitapp",
+    storageBucket: "qm-habitapp.appspot.com",
+    messagingSenderId: "560401229086",
+    appId: "1:560401229086:web:4217b16f9678ffd811d50f",
+    measurementId: "G-LL3PSHXV7Z"
+  };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    import {getDatabase, ref, get, set, child, update, remove, push, onValue}
+    from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } 
+    from "https://www.gstatic.com/firebasejs/9.18.0/firebase-storage.js";
+
+    const db = getDatabase();
+
+    const storage = getStorage();
+    const storageRef = sRef(storage, "uploads");
+
+    // Get a reference to the "data" folder in your Firebase Realtime Database
+    var dataRef = ref(db, "data");
+
+    const images = document.createElement("div");
+    document.body.appendChild(images);
+   // Loop through each unique key in the "data" folder and access the individual variables
+    onValue(dataRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const key = childSnapshot.key;
+            const category = childSnapshot.child("Category").val();
+            const location = childSnapshot.child("LocationTaken").val();
+            const [lat, lng] = location.split(",");
+            const dateTaken = childSnapshot.child("DateTaken").val();
+            const dateUploaded = childSnapshot.child("DateUploaded").val();
+            const timeTaken = childSnapshot.child("TimeTaken").val();
+            const timeUploaded = childSnapshot.child("TimeUploaded").val();
+            const title = childSnapshot.child("Title").val();
+            const description = childSnapshot.child("Description").val();
+
+            
+            createAMarker(category, 0.75, lat, lng);
+
+            //Add images
+            const imageUrl = childSnapshot.child("ImageURL").val();
+
+            // Create a new img element
+            const img = document.createElement("img");
+            img.setAttribute("id", "display-img");
+            
+            // Set the src attribute of the img element to the image URL
+            img.src = imageUrl;
+            
+            // Add the img element to the document
+            images.appendChild(img);
+
+            //Text
+            for (let i = 0; i < 8; i++) {
+                let text;
+                switch(i)
+                {
+                    case(0):
+                    text = title;
+                    break;
+
+                    case(1):
+                    text = category;
+                    break;
+
+                    case(2):
+                    text = description;
+                    break;
+
+                    case(3):
+                    text = "Date Taken: "+dateTaken; 
+                    break;
+
+                    case(4):
+                    text = "Time Taken: "+timeTaken; 
+                    break;
+
+                    case(5):
+                    text = "Date Uploaded: "+dateUploaded; 
+                    break;
+
+                    case(6):
+                    text = "Time Uploaded: "+timeUploaded; 
+                    break;
+
+                    case(7):
+                    text = "Location: "+ location; 
+                    break;
+                }
+                const newP = document.createElement("p");
+                newP.textContent = `${text}`;
+                images.appendChild(newP);
+            }
+        });
     });
+
+
+    function createAMarker(category, size, latitude, longitude)
+    {
+        let color;
+        switch(category)
+        {
+            case "animal":
+                color = 0xFF0000;
+                break;
+
+            case "plant":
+                color = 0x00FF00;
+                break;
+
+            case "other":
+                color = 0x0000FF;
+                break;
+
+            default:
+            color = 0xFFFFFF;
+                break;
+        }
+        var yCord = (latitude -  51.52212253745709)/0.005590374772;
+        var xCord = (longitude - -0.039975680525528745)/0.004583935236;
+
+         //Create a new mesh object for the marker
+        const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const markerMaterial = new THREE.MeshBasicMaterial({ color: color });
+        const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+
+        // Position the marker in the scene
+        markerMesh.position.set(0 - (2*xCord), -0.05, 4-(4*yCord));
+        console.log(markerMesh.position);
+        markerMesh.scale.set(size,size,size);
+        scene.add(markerMesh);
+
+        // Add a click event listener to the marker
+        markerMesh.addEventListener('click', () => {
+        // Perform the desired action when the marker is clicked
+        console.log('Marker clicked!');
+        });
+    }
+   
 </script>
 </html>

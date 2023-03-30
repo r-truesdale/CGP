@@ -1,10 +1,13 @@
+// const fs = require('fs');
+// const PNG = require('pngjs').PNG;
+    
     const input = document.querySelector("input");
     const output = document.querySelector("output");
     
     let imagesArray = [];
     let currDate = new Date();
-    let hoursMin = currDate.getHours().toString().padStart(2, '0') + ':' + currDate.getMinutes().toString().padStart(2, '0')+':'+currDate.getSeconds().toString().padStart(2, '0');
-    let yrMonDay = currDate.getFullYear() + '-' + (currDate.getMonth()+1).toString().padStart(2, '0') + '-' + (currDate.getDay()).toString();
+    let hoursMin = String(currDate.getHours()).padStart(2, '0') + ':' + String(currDate.getMinutes()).padStart(2, '0')+':'+String(currDate.getSeconds()).padStart(2, '0');
+    let yrMonDay = currDate.getFullYear() + '-' + String(currDate.getMonth()+1).padStart(2, '0') + '-' + String(currDate.getDay()).padStart(2,"0");
 
     let locationTaken;
     let timeTaken;
@@ -58,17 +61,32 @@
       output.innerHTML = images;
         
         document.getElementById("imgUpload").hidden = true;
-        
-        if(isPNGFile(document.getElementById("imgUpload")))
+       
+        if(isPNGFile(imagesArray[0]))
         {
           console.log("Uploaded a PNG");
           getExifPNG(imagesArray[0]);
         }
         else
         {
-          console.log("Uploaded else");
+          if (imagesArray[0].type === "image/heic") {
+            console.error("File is a HEIC image.");
+            // Convert HEIC to JPEG
+            heic2any({
+              blob: file,
+              toType: "image/jpeg",
+              quality: 0.7
+            }).then(function(jpegBlob) {
+              file = jpegBlob; // overwrite the original file with the converted JPEG image
+              // continue with metadata extraction using the new `file` variable
+            }).catch(function(error) {
+              console.error("Error converting HEIC to JPEG:", error);
+            });
+          }
+
+            console.log("Uploaded jpeg");
           getExif();
-        }
+            }
         
 
         
@@ -76,32 +94,124 @@
         
     }
 
-    function getExifPNG(image)
+    function getExifPNG(file)
     {
-      console.log("Getting EXIF Data");
-       // get the EXIF metadata from the Image object
-       const exifData = EXIF.getAllTags(image);
+      // Load the file using the FileReader API
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = () => {
+        // Create a DataView object from the ArrayBuffer
+        const dataView = new DataView(reader.result);
+
+        // Check that the file is a PNG image
+        if (dataView.getUint32(0) !== 0x89504e47 || dataView.getUint32(4) !== 0x0d0a1a0a) {
+          console.error("File is not a PNG image.");
+          return;
+        }
+
+        // Parse the PNG chunks to extract metadata
+        let pos = 8;
+        let dateTimeOriginal = null;
+        let latitude = null;
+        let longitude = null;
+
+        while (pos < dataView.byteLength) {
+          // Get the length and type of the chunk
+          const length = dataView.getUint32(pos);
+          const type = String.fromCharCode(dataView.getUint8(pos + 4), dataView.getUint8(pos + 5), dataView.getUint8(pos + 6), dataView.getUint8(pos + 7));
+
+          // Check if the chunk contains metadata we're interested in
+          if (type === "tEXt") {
+            // Extract the date/time original information
+            const text = new TextDecoder().decode(dataView.buffer.slice(pos + 8, pos + 8 + length));
+            if (text.startsWith("Date Time Original:")) {
+              dateTimeOriginal = text.slice(20);
+            }
+          }  
+          if (type === "iCCP") {
+            // Extract the location information
+            const text = new TextDecoder().decode(dataView.buffer.slice(pos + 8, pos + 8 + length));
+            const match = /GPSLatitude: ([\d\.]+) GPSLongitude: ([\d\.]+)/.exec(text);
+            if (match) {
+              latitude = match[1];
+              longitude = match[2];
+            }
+          }
+          if (type === "iTXt") {
+            // Extract the date/time original information
+            const text = new TextDecoder().decode(dataView.buffer.slice(pos + 8, pos + 8 + length));
+            if (text.startsWith("Date Time Original:")) {
+              dateTimeOriginal = text.slice(20);
+            }
+          }
+          if (type === "gAMA") {
+            // Extract the location information
+            const text = new TextDecoder().decode(dataView.buffer.slice(pos + 8, pos + 8 + length));
+            const match = /GPSLatitude: ([\d\.]+) GPSLongitude: ([\d\.]+)/.exec(text);
+            if (match) {
+              latitude = match[1];
+              longitude = match[2];
+            }
+          }
+
+          // Move to the next chunk
+          pos += length + 12;
+        }
+
+        // Do something with the extracted metadata
+        console.log("Date/time original:", dateTimeOriginal);
+        console.log("Location:", latitude && longitude ? `${latitude}, ${longitude}` : null);
       
-       // get the time metadata
-       const time = exifData.DateTimeOriginal;
-       
-       // get the location metadata
-       const lat = exifData.GPSLatitude;
-       const latRef = exifData.GPSLatitudeRef;
-       const lon = exifData.GPSLongitude;
-       const lonRef = exifData.GPSLongitudeRef;
+              timeTaken = dateTimeOriginal != null ? dateTimeOriginal : null;
 
-       console.log(time);
-       
-       // convert the latitude and longitude metadata to decimal degrees
-       const latitude = (lat[0] + lat[1] / 60 + lat[2] / 3600) * (latRef === 'N' ? 1 : -1);
-       const longitude = (lon[0] + lon[1] / 60 + lon[2] / 3600) * (lonRef === 'E' ? 1 : -1);
-       
-       // log the time and location metadata to the console
-       console.log(`Time: ${time}`);
-       console.log(`Location: (${latitude}, ${longitude})`);
+              var dateString;
+              var timeString;
+              var locationNorth = latitude;
+              var locationEast = longitude;
+
+              if(locationTaken.latitude == null)
+              {
+                console.log("no Location metadata");
+                const min1 = 51.52212253745709;
+                const max1 = 51.52771291222913;
+
+                const min2 = -0.039975680525528745;
+                const max2 = -0.04455961576196161;
+
+                const randomNum1 = Math.random() * (max1 - min1) + min1;
+                const randomNum2 = Math.random() * (min2 - max2) + max2;
+                locationNorth = randomNum1;
+                locationEast =  randomNum2;
+              }
+              else
+              {
+                locationNorth = location.latitude[2];
+                locationEast = location.longitude[2];
+              }
+
+              
+
+              if(timeTaken == null)
+              {
+                console.log("no Time metadata");
+                dateString = yrMonDay;
+                timeString = hoursMin;
+              }
+              else
+              {
+                var datetimeArray = timeTaken.split(' ');
+                dateString = datetimeArray[0].replace(/:/g, '-');
+                timeString = datetimeArray[1];
+              }
+
+              
+
+              document.getElementById("TT").innerHTML = timeString;
+              document.getElementById("DT").innerHTML = dateString;
+              document.getElementById("LT").innerHTML = locationNorth +","+locationEast;
+      
+      };
     }
-
     function getExif() {
         const img = new Image();
         img.src = document.getElementById("imgStar").src;
@@ -156,8 +266,16 @@
               if(locationTaken.latitude == null)
               {
                 console.log("no Location metadata");
-                locationNorth = 51.5241;
-                locationEast =  0.0404;
+                const min1 = 51.52212253745709;
+                const max1 = 51.52771291222913;
+
+                const min2 = -0.039975680525528745;
+                const max2 = -0.04455961576196161;
+
+                const randomNum1 = Math.random() * (max1 - min1) + min1;
+                const randomNum2 = Math.random() * (min2 - max2) + max2;
+                locationNorth = randomNum1;
+                locationEast =  randomNum2;
               }
               else
               {
@@ -217,85 +335,9 @@
       
       function isPNGFile(file) {
         const imageType = file.type;
+        console.log("Png Uploaded");
         return imageType === 'image/png';
       }
-
-      function convertToJPG (file) {
-        var image = new Image();
-
-        image.src = file.nativeURL;
-        var canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        canvas.getContext("2d").drawImage(image, 0, 0);
-
-        image.onload = function(){
-          //save to temp location??
-
-          file.createWriter(function(fileWriter) {
-
-            file.onWriteEnd = function(e) {
-              console.log('Write completed.');
-            };
-
-            file.onError = function(e) {
-              console.log('Write failed: ' + e.toString());
-            };
-
-            // Create a new Blob and write it to log.txt.
-            var ui8a = convertDataURIToBinary(image);
-
-            var blob = new Blob(ui8a.buffer, {type: "image/jpeg"});
-
-            fileWriter.write(blob);
-
-          }, errorHandler);
-        };
-
-        image.src = canvas.toDataURL("image/jpg");
-        return image;
-      };
-      
-      function isPNGFile(file) {
-        const imageType = file.type;
-        return imageType === 'image/png';
-      }
-
-      function convertToJPG (file) {
-        var image = new Image();
-
-        image.src = file.nativeURL;
-        var canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        canvas.getContext("2d").drawImage(image, 0, 0);
-
-        image.onload = function(){
-          //save to temp location??
-
-          file.createWriter(function(fileWriter) {
-
-            file.onWriteEnd = function(e) {
-              console.log('Write completed.');
-            };
-
-            file.onError = function(e) {
-              console.log('Write failed: ' + e.toString());
-            };
-
-            // Create a new Blob and write it to log.txt.
-            var ui8a = convertDataURIToBinary(image);
-
-            var blob = new Blob(ui8a.buffer, {type: "image/jpeg"});
-
-            fileWriter.write(blob);
-
-          }, errorHandler);
-        };
-
-        image.src = canvas.toDataURL("image/jpg");
-        return image;
-      };
 
       function urlToBase64(url) {
         return new Promise((resolve, reject) => {
