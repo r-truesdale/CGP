@@ -45,7 +45,7 @@ body {
 #btn-delete {
  font-family: var(--font-family-dm_sans);
  align-items: center;
- background-color: rgb(54, 118, 58);
+ background-color: #118C5B;
  border-radius: 2vh;
  display: flex;
  overflow: hidden;
@@ -84,7 +84,8 @@ body {
 
 #title-block {
  /* background-color: rgba(66, 93, 72, 1); */
- background-color: rgb(54, 118, 58);
+ /* background-color: rgb(54, 118, 58); */
+ background-color: #118C5B;
  /* display: flex; */
  height: 10vh;
  width: 100%;
@@ -427,4 +428,105 @@ footer {
  margin: 0;
  top: 100vh;
  box-shadow: 0 0.6vh 1.1vh 0 rgba(18, 32, 18, 0.2), 0 0.9vh 2.8vh 0 rgba(0, 0, 0, 0.19);
+}
+
+#slideshow-container{
+box-sizing: border-box;
+width:100vw;
+height: 35vh;
+bottom:0;
+/* position: relative; */
+margin: auto;
+margin-bottom: 0vh;
+
+}
+.slide {
+ display: none;
+ width: 80vw;
+ margin: auto;
+}
+#slide-content{
+ text-align: center;
+}
+.prev, .next {
+	cursor: pointer;
+ background-color: #118C5B;
+	width: 25vw;
+ height: 5vh;
+ margin: auto;
+	color: rgb(32, 22, 22);
+	font-weight: bold;
+	font-size: 2.3vh;
+	transition: 0.6s ease;
+	border-radius: 0.6vh;
+ border: none;
+ padding: auto;
+ text-align: center;
+ /* margin-top:-30vh; */
+ bottom: 0;
+ /* box-sizing: content-box; */
+}
+/* Position the "next button" to the right */
+.next {
+	float:right;
+ margin-right: 10vw;
+ }
+.prev{
+ float: left;
+ margin-left: 10vw;
+
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+	background-color: #4de9aa;
+}
+#slide-img{
+ vertical-align: middle;
+}
+.numbertext {
+ color: #f5f5f6;
+ font-size: 2vh;
+ padding: 1vh;
+ background-color: rgba(0, 0, 0, 0.2);
+ width: fit-content;
+ height: 3vh;
+ margin: auto;
+ margin-left: 0 ;
+ position: relative;
+ margin-bottom: -5vh;
+ text-align: center;
+}
+.dot {
+ height: 2vh;
+ width: 2vh;
+ margin:1vh 0.5vh;
+ /* background-color: #d2cfcf; */
+ background-color: rgb(209, 209, 35, 0.3);
+ border-radius: 50%;
+ display: inline-block;
+ transition: background-color 0.6s ease;
+}
+
+.active {
+ background-color: #d1d123;
+}
+
+/* Fading animation */
+.fade {
+ animation-name: fade;
+ animation-duration: 1.5s;
+}
+.img-text{
+ background-color:rgb(17, 140, 91, 0.1);
+ padding: 1vh;
+}
+
+@keyframes fade {
+ from {opacity: .4} 
+ to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+ .text {font-size: 11px}
 }
