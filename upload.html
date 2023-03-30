@@ -59,6 +59,14 @@
         <label for="title">Title:</label>
         <input type="text" id="title" name="title"><br><br>
       </div>
+      <label for="Category">Category:</label>
+
+      <select name="Category" id="category">
+        <option value="animal">Animal</option>
+        <option value="plant">Plant</option>
+        <option value="other">Other</option>
+      </select>
+      <br>
       <div id="img-desc">
         <label for="descrip">Description:</label>
         <input type="text" id="descrip" name="descrip"><br><br>
@@ -188,6 +196,7 @@
     var timeTaken = document.getElementById("TT");
     var timeUploaded = document.getElementById("TU");
     var locationTaken = document.getElementById("LT");
+    var category = document.getElementById("category");
 
     const input = document.querySelector("input");
     const file = input.files[0];
@@ -226,6 +235,7 @@
         TimeTaken: timeTaken.innerHTML,
         TimeUploaded: timeUploaded.innerHTML,
         LocationTaken: locationTaken.innerHTML,
+        Category: category.value,
       }).then(() => {
         console.log("New data added!");
         location.reload();
