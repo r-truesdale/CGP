@@ -169,7 +169,7 @@
               var locationNorth = latitude;
               var locationEast = longitude;
 
-              if(locationTaken.latitude == null)
+              if(latitude == null)
               {
                 console.log("no Location metadata");
                 const min1 = 51.52212253745709;
