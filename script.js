@@ -7,7 +7,7 @@
     let imagesArray = [];
     let currDate = new Date();
     let hoursMin = String(currDate.getHours()).padStart(2, '0') + ':' + String(currDate.getMinutes()).padStart(2, '0')+':'+String(currDate.getSeconds()).padStart(2, '0');
-    let yrMonDay = currDate.getFullYear() + '-' + String(currDate.getMonth()+1).padStart(2, '0') + '-' + String(currDate.getDay()).padStart(2,"0");
+    let yrMonDay = currDate.getFullYear() + '-' + String(currDate.getMonth()+1).padStart(2, '0') + '-' +String(currDate.getDate()).padStart(2,"0");
 
     let locationTaken;
     let timeTaken;
