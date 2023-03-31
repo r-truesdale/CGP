@@ -8,13 +8,12 @@
 }
 
 #display-img {
-  width:50vh;
+  width: 50vh;
   /* float: right; */
   padding: 12vh auto;
   display: block;
   margin: auto;
 }
-
 
 #my-images {
   background-color: rgba(245, 246, 246, 1);
@@ -22,16 +21,16 @@
   --font-family-dm_sans: "epilogue";
   font-size: 5vh;
   text-align: center;
-  color: #118C5B;
+  color: #118c5b;
+  display: none;
 }
 /* .title {
   font-size: 24px;
   font-weight: bold;
 } */
 
-#my-images h1{
+#my-images h1 {
   font-size: 5vh;
-
 }
 
 #my-images h2 {
@@ -40,6 +39,10 @@
 #my-images h3 {
   font-size: 5vh;
 }
-#my-images h4, #my-images h5, #my-images h6, #my-images h7, #my-images h8{
-font-size: 0;
+#my-images h4,
+#my-images h5,
+#my-images h6,
+#my-images h7,
+#my-images h8 {
+  font-size: 0;
 }
