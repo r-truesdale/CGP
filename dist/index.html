@@ -525,22 +525,5 @@
         console.log("Marker clicked!");
       });
     }
-
-    //Create a new mesh object for the marker
-    const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
-      const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-      const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
-
-      // Position the marker in the scene
-      markerMesh.position.set(10562.96585099726, -0.05, 20796.25363065308);
-      console.log("Queens Building");
-      markerMesh.scale.set(2, 2, 2);
-      scene.add(markerMesh);
-
-      // Add a click event listener to the marker
-      markerMesh.addEventListener("click", () => {
-        // Perform the desired action when the marker is clicked
-        console.log("Marker clicked!");
-      });
   </script>
 </html>
