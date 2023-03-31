@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="data.css" />
+
+    <style></style>
+  </head>
+  <body>
+    <div id="map">
+      <div id="container"></div>
+    </div>
+  </body>
+  <script type="module">
+    import * as THREE from "./node_modules/three/build/three.module.js";
+    import { OBJLoader } from "../node_modules/three/examples/jsm/loaders/OBJLoader.js";
+    import { OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitControls.js";
+
+    const container = document.getElementById("container");
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      container.clientWidth / container.clientHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    //Gradient Background
+    const canvas = document.createElement("canvas");
+    canvas.width = 256;
+    canvas.height = 256;
+    const context = canvas.getContext("2d");
+    const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, "#cfd9df");
+    gradient.addColorStop(1, "#e2ebf0");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    const texture = new THREE.CanvasTexture(canvas);
+    scene.background = texture;
+
+    //Lighting
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(0, 10, 0);
+    scene.add(directionalLight);
+
+    directionalLight.castShadow = true;
+
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 2048;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+
+    directionalLight.shadow.cameraVisible = true;
+    directionalLight.shadow.bias = 0.001;
+
+    // Load the OBJ file
+    const loader = new OBJLoader();
+    const textureLoader = new THREE.TextureLoader();
+    loader.load("qm campus.obj", function (obj) {
+      obj.scale.set(10, 10, 10); // Scale the object
+
+      const boundingBox = new THREE.Box3().setFromObject(obj); // Compute bounding box
+      const center = new THREE.Vector3();
+      boundingBox.getCenter(center); // Get center of bounding box
+
+      obj.position.sub(center);
+      console.log(center); // Shift object to center at origin
+
+      // Create a pivot point
+      const pivot = new THREE.Object3D();
+      pivot.position.copy(center);
+      scene.add(pivot);
+      pivot.add(obj); // Add the object to the pivot point
+
+      obj.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          const texture = textureLoader.load("textures/Solid_grey.svg.png");
+          child.material = new THREE.MeshPhongMaterial({ map: texture });
+          child.castShadow = true; // Enable casting of shadows by this mesh
+          child.receiveShadow = true; // Enable receiving of shadows by this mesh
+        }
+      });
+    });
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      // // Rotate the object
+      // scene.children.forEach(child => {
+      //     if(child instanceof THREE.Object3D){
+      //       child.rotation.x += 0.00;
+      //       child.rotation.y += 0.001;
+      //     }
+      //     });
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // function createAMarker()
+    // {
+    //     // Create a new mesh object for the marker
+    //     const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+    //     const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+
+    //     // Position the marker in the scene
+    //     markerMesh.position.set(0, 0, 0);
+    //     scene.add(markerMesh);
+
+    //     // Add a click event listener to the marker
+    //     markerMesh.addEventListener('click', () => {
+    //     // Perform the desired action when the marker is clicked
+    //     console.log('Marker clicked!');
+    //     });
+    // }
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_kojUp7JbkEhVopquwm1iEZ726dbpnNA",
+      authDomain: "qm-habitapp.firebaseapp.com",
+      databaseURL: "https://qm-habitapp-default-rtdb.firebaseio.com",
+      projectId: "qm-habitapp",
+      storageBucket: "qm-habitapp.appspot.com",
+      messagingSenderId: "560401229086",
+      appId: "1:560401229086:web:4217b16f9678ffd811d50f",
+      measurementId: "G-LL3PSHXV7Z",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    import {
+      getDatabase,
+      ref,
+      get,
+      set,
+      child,
+      update,
+      remove,
+      push,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+
+    import {
+      getStorage,
+      ref as sRef,
+      uploadBytes,
+      getDownloadURL,
+    } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-storage.js";
+
+    const db = getDatabase();
+
+    const storage = getStorage();
+    const storageRef = sRef(storage, "uploads");
+
+    // Get a reference to the "data" folder in your Firebase Realtime Database
+    var dataRef = ref(db, "data");
+
+    const images = document.createElement("div");
+    images.setAttribute("id", "my-images"); //AA
+
+    document.body.appendChild(images);
+    // Loop through each unique key in the "data" folder and access the individual variables
+    onValue(dataRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const key = childSnapshot.key;
+        const category = childSnapshot.child("Category").val();
+        const location = childSnapshot.child("LocationTaken").val();
+        const [lat, lng] = location.split(",");
+        const dateTaken = childSnapshot.child("DateTaken").val();
+        const dateUploaded = childSnapshot.child("DateUploaded").val();
+        const timeTaken = childSnapshot.child("TimeTaken").val();
+        const timeUploaded = childSnapshot.child("TimeUploaded").val();
+        const title = childSnapshot.child("Title").val();
+        const description = childSnapshot.child("Description").val();
+
+        createAMarker(category, 0.75, lat, lng);
+        // //AA
+        // // Create a new div element to hold the image and metadata
+        // const imageContainer = document.createElement("div");
+        // imageContainer.classList.add("image-container");
+
+        // // Add the image container to the document
+        // images.appendChild(imageContainer);
+        // //AA
+
+        //Add images
+        const imageUrl = childSnapshot.child("ImageURL").val();
+
+        // Create a new img element
+        const img = document.createElement("img");
+
+        img.setAttribute("id", "display-img");
+
+        // Set the src attribute of the img element to the image URL
+        img.src = imageUrl;
+
+        // Add the img element to the document
+        images.appendChild(img);
+
+        //Text
+        for (let i = 0; i < 8; i++) {
+          let text;
+          let heading;
+
+          switch (i) {
+            case 0:
+              heading = "h1";
+
+              text = title;
+              break;
+
+            case 1:
+              heading = "h2";
+
+              text = category;
+              break;
+
+            case 2:
+              heading = "h3";
+              text = description;
+              break;
+
+            case 3:
+              heading = "h4";
+              text = "Date Taken: " + dateTaken;
+              break;
+
+            case 4:
+              heading = "h5";
+              text = "Time Taken: " + timeTaken;
+              break;
+
+            case 5:
+              heading = "h6";
+              text = "Date Uploaded: " + dateUploaded;
+              break;
+
+            case 6:
+              heading = "h7";
+              text = "Time Uploaded: " + timeUploaded;
+              break;
+
+            case 7:
+              heading = "h8";
+              text = "Location: " + location;
+              break;
+          }
+          // const newP = document.createElement("p");
+          // newP.textContent = `${text}`;
+          const newElement = document.createElement(heading);
+          newElement.textContent = `${text}`;
+          images.appendChild(newElement);
+
+          // images.appendChild(newP);
+          /// p was done by Nat to make paragraphs for each set of metadata. So i Made them headings instead so i can style them individullay. maybe theres a more efficient way though
+        }
+        // Adding space between images
+        const hr = document.createElement("hr");
+        hr.style.backgroundColor = "black";
+        hr.style.height = "2px";
+
+        images.appendChild(hr);
+        images.appendChild(document.createElement("br"));
+        // Add margin to each individual card
+      });
+    });
+
+    function createAMarker(category, size, latitude, longitude) {
+      let color;
+      switch (category) {
+        case "animal":
+          color = 0xff0000;
+          break;
+
+        case "plant":
+          color = 0x00ff00;
+          break;
+
+        case "other":
+          color = 0x0000ff;
+          break;
+
+        default:
+          color = 0xffffff;
+          break;
+      }
+      var yCord = (latitude - 51.52212253745709) / 0.005590374772;
+      var xCord = (longitude - -0.039975680525528745) / 0.004583935236;
+
+      //Create a new mesh object for the marker
+      const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+      const markerMaterial = new THREE.MeshBasicMaterial({ color: color });
+      const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+
+      // Position the marker in the scene
+      markerMesh.position.set(0 + 2 * xCord, -0.05, 4 - 4 * yCord);
+      console.log(markerMesh.position);
+      console.log(yCord);
+      markerMesh.scale.set(size, size, size);
+      scene.add(markerMesh);
+
+      // Add a click event listener to the marker
+      markerMesh.addEventListener("click", () => {
+        // Perform the desired action when the marker is clicked
+        console.log("Marker clicked!");
+      });
+    }
+  </script>
+</html>
