@@ -247,7 +247,7 @@
 
 
             //console.log("Location Start");
-            const location = {
+            var location = {
                 latitude: exifData.GPSLatitude,
                 longitude: exifData.GPSLongitude
               };
@@ -279,8 +279,9 @@
               }
               else
               {
-                locationNorth = location.latitude[2];
-                locationEast = location.longitude[2];
+                location = convertToLatLong(location.latitude[0], location.latitude[1], location.latitude[2], location.longitude[0], location.longitude[1], location.longitude[2]);
+                locationNorth = location.latitude;
+                locationEast = location.longitude;
               }
 
               
@@ -356,6 +357,20 @@
           xhr.responseType = 'blob';
           xhr.send();
         });
+      }
+
+      function convertToLatLong(latitudeDegrees, latitudeMinutes, latitudeSeconds, longitudeDegrees, longitudeMinutes, longitudeSeconds)
+      {
+        // Convert degrees, minutes, and seconds to decimal degrees
+        const latitudeDecimal = latitudeDegrees + (latitudeMinutes/60) + (latitudeSeconds/3600);
+        const longitudeDecimal = -1 * (longitudeDegrees + (longitudeMinutes/60) + (longitudeSeconds/3600));
+
+        // Create a latitude and longitude object
+        const coordinates = {
+          latitude: latitudeDecimal,
+          longitude: longitudeDecimal
+        };
+        return coordinates;
       }
 
      
