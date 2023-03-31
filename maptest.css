@@ -8,32 +8,38 @@
 }
 
 #display-img {
-  width: 100px;
-  height: 100px;
+  width:50vh;
+  /* float: right; */
+  padding: 12vh auto;
+  display: block;
+  margin: auto;
 }
 
-/* div {
-  border: solid blue;
-} */
 
 #my-images {
-  background-color: lightblue;
+  background-color: rgba(245, 246, 246, 1);
   padding: 20px;
-  border: 4px solid rgb(168, 38, 38);
-  visibility: hidden;
+  --font-family-dm_sans: "epilogue";
+  font-size: 5vh;
+  text-align: center;
+  color: #118C5B;
 }
 /* .title {
   font-size: 24px;
   font-weight: bold;
 } */
 
-/* h1 {
-  color: blueviolet;
-  font-size: 15;
-} */
+#my-images h1{
+  font-size: 5vh;
 
-h2 {
-  /* color: rgb(175, 162, 39); */
-  /* font-size: 12; */
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+#my-images h2 {
+  font-size: 5vh;
+}
+#my-images h3 {
+  font-size: 5vh;
+}
+#my-images h4, #my-images h5, #my-images h6, #my-images h7, #my-images h8{
+font-size: 0;
 }

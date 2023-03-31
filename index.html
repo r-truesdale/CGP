@@ -10,7 +10,7 @@
   </head>
   <body>
       <div id="title-block">
-        <h1 class="title">QM HabitApp</h1>
+        <img src="img/Text wo BG.png" alt="logo" id="logo" style="margin-top:-0.5vh ;">
       </div>
 <div id="counter">
   <p>What lives here?</p>
@@ -28,19 +28,20 @@
       <div id="modal-body">
         <p id="text">We are facing some serious environmental challenges. 
           One of the biggest is loss of biodiversity. Few people are aware of the value and richness of the greenspaces around them. 
-          HabitApp goal is to get people in and appreciating our urban greenspaces- maybe convert a few to bona fide citizen scientists. Our mission is 3-part:
+        </p><p>HabitApp's goal is to get people in and appreciating our urban greenspaces- maybe convert a few to bona fide citizen scientists.</p>
+        <p><b>Our 3-part mission:</b></p>
         <p id="text"><b>1.	Habitat Restoration:</b><br> When people are aware of the importance of these areas for biodiversity, they might just be more likely to participate in restoration efforts. At Queen Mary we have wildflower planting and canal clean-ups you can sign up for on the Student Union site.</p>
-        <p id="text"><b>2.	Ecological Education:</b> Increased awareness of urban greenspaces can help people understand the value of biodiversity and the role that greenspaces play in supporting ecological processes such as pollination, nutrient cycling, and carbon sequestration.</p>
-        <p id="text"><b>3.	Citizen Science:</b> By crowdsourcing this data we can make a rich and valuable monitor of species population and how they may be affected by climate and…us! In a time of changing climate this is more important than ever before. We share all out data with iNaturalist so it can be used by ecology researchers across the globe.</p>
+        <p id="text"><b>2.	Ecological Education:</b><br> Increased awareness of urban greenspaces can help people understand the value of biodiversity and the role that greenspaces play in supporting ecological processes such as pollination, nutrient cycling, and carbon sequestration.</p>
+        <p id="text"><b>3.	Citizen Science:</b><br> By crowdsourcing this data we can make a rich and valuable monitor of species population and how they may be affected by climate and…us! In a time of changing climate this is more important than ever before. We share all out data with iNaturalist so it can be used by ecology researchers across the globe.</p>
       </div>
     </div>
   </div>
     <div id="map">
       <div id="container"></div>
     </div>
-    <!-- <button class="button" id="btn-popup2">
-      <p>What people have seen!</p>
-    </button> -->
+    <button class="button" id="btn-popup2"  onclick=" location.href = 'data.html'">
+      <p>What you have seen!</p>
+    </button>
       <div id="modal2">
         <div id="modal-content2">
           <div id="modal-header2">
@@ -103,8 +104,7 @@
         <!-- <span class="dot"></span> -->
       </div>
     </div>
-  </div>
-
+</div>
   </body>
   <script>
     var modal2 = document.getElementById("modal2");
@@ -466,15 +466,15 @@
     function createAMarker(category, size, latitude, longitude) {
       let color;
       switch (category) {
-        case "animal":
+        case "Animal":
           color = 0x46a937;
           break;
 
-        case "plant":
+        case "Plant":
           color = 0xd1d123;
           break;
 
-        case "other":
+        case "Other":
           color = 0x4de9aa;
           break;
 

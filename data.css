@@ -1,61 +1,150 @@
-#map {
-  height: 500px;
+@import url("https://fonts.googleapis.com/css2?family=Epilogue");
+
+
+:root {
+  --font-family-epilogue: "Epilogue";
 }
+
+#map {
+  height: 0;
+  margin: -50vh;
+}
+
 #container {
-  width: 1900px;
-  height: 500px;
+  width: 100vw;
+  height: 100vh;
   display: none;
 }
 
 #display-img {
-  width: 250px;
-  height: 250px;
-  float: right;
+  width: 50vh;
   border: solid;
-  border-radius: 25px;
-}
-
-div {
-  /* border: solid blue; */
+  border-radius: 3vh;
+  padding: 12vh auto;
+  display: block;
+  margin: auto;
 }
 
 #my-images {
-  background-color: lightblue;
-  padding: 20px;
-  border: 4px solid rgb(168, 38, 38);
-}
-.title {
-  font-size: 24px;
-  font-weight: bold;
+  background-color: rgba(245, 246, 246, 1);
+  padding: 1vh;
+  font-family: var(--font-family-epilogue);
+  font-size: 5vh;
+  text-align: center;
+  color: #118C5B;
+
 }
 
-h1 {
-  color: rgb(0, 0, 0);
-  font-size: 29px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.button {
+  font-family: var(--font-family-dm_sans);
+  align-items: center;
+  background-color: #118C5B;
+  border-radius: 2vh;
+  display: flex;
+  text-align: center;
+  margin: 2vh auto;
+  border: none;
+  border-radius: 2.5vh;
+  padding: 1vh 6vw;
 }
 
-h2 {
-  color: rgb(148, 140, 68);
-  font-size: 25px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-h3 {
-  color: blue;
-
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-}
-h4 {
-  font-size: 15px;
-}
-h5 {
-  font-size: 15px;
-}
-h6 {
-  font-size: 15px;
+#home-svg{
+  padding: 0;
+  height: 6vh;
+  min-width: 1vh;
+  display: flex;
+  margin: auto;
 }
 
 .image-container {
   border: 1px solid black;
   margin-bottom: 10px;
+}
+
+#map {
+  height: 100vh;
+  width: 100vw;
+}
+
+#container {
+  width: 99vw;
+  height: 100vh;
+}
+
+.display {
+  align-items: center;
+  /* border: 1px none; */
+  display: flex;
+  flex-direction: column;
+  /* height: 800px;
+max-width: 360px; */
+  width: 100vw;
+  height: 100vh;
+  margin: -1.2vh;
+}
+
+#title-block {
+  /* background-color: rgba(66, 93, 72, 1); */
+  /* background-color: rgb(54, 118, 58); */
+  background-color: #118C5B;
+  /* display: flex; */
+  height: 10vh;
+  width: 100%;
+  padding: 0vh;
+  /* margin: 0; */
+  top: 0;
+  text-align: center;
+  /* shadow: right down blur spread  */
+  box-shadow: 0rem 0rem 0.3rem 0.2rem #00000040;
+
+}
+
+#my-images {
+
+  background-color: rgba(245, 246, 246, 1);
+  padding: 4vh;
+  --font-family-dm_sans: "epilogue";
+  font-size: 5vh;
+  text-align: center;
+  color: #118C5B;
+}
+
+/* .title {
+  font-size: 24px;
+  font-weight: bold;
+} */
+#logo {
+  height: 10vh;
+  text-shadow: 0rem 0.3rem 0.3rem #00000040;
+  padding-top: 1.2vh;
+  margin: auto;
+  margin-top: -0.5vh;
+}
+
+#my-images h1 {
+  font-size: 5vh;
+  padding-bottom: 1vh;
+  border-bottom: 0.3vh dashed #d1d123;
+}
+
+#my-images h2 {
+  font-size: 5vh;
+  font-size: 5vh;
+  padding-bottom: 1vh;
+  border-bottom: 0.3vh dashed #d1d123;
+}
+
+#my-images h3 {
+  font-size: 5vh;
+  font-size: 5vh;
+  padding-bottom: 1vh;
+  border-bottom: 0.3vh dashed #d1d123;
+}
+
+#my-images h4,
+#my-images h5,
+#my-images h6,
+#my-images h7,
+#my-images h8 {
+  font-size: 0;
 }

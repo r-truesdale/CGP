@@ -17,6 +17,12 @@ body {
     /* Firefox */
 
 }
+#logo{
+    height: 10vh;
+    text-shadow: 0rem 0.3rem 0.3rem #00000040;
+    padding-top: 1.2vh;
+    margin: auto;
+}
 
 body::-webkit-scrollbar {
     display: none;
