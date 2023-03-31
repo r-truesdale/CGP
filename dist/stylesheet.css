@@ -15,11 +15,7 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-    margin: 5px;
 
-}
-.otherPage{
-    margin: -0.5vw;
 }
 #logo{
     height: 10vh;
