@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Epilogue");
 
-
 :root {
   --font-family-epilogue: "Epilogue";
 }
@@ -31,14 +30,13 @@
   font-family: var(--font-family-epilogue);
   font-size: 5vh;
   text-align: center;
-  color: #118C5B;
-
+  color: #118c5b;
 }
 
 .button {
   font-family: var(--font-family-dm_sans);
   align-items: center;
-  background-color: #118C5B;
+  background-color: #118c5b;
   border-radius: 2vh;
   display: flex;
   text-align: center;
@@ -48,7 +46,7 @@
   padding: 1vh 6vw;
 }
 
-#home-svg{
+#home-svg {
   padding: 0;
   height: 6vh;
   min-width: 1vh;
@@ -86,7 +84,7 @@ max-width: 360px; */
 #title-block {
   /* background-color: rgba(66, 93, 72, 1); */
   /* background-color: rgb(54, 118, 58); */
-  background-color: #118C5B;
+  background-color: #118c5b;
   /* display: flex; */
   height: 10vh;
   width: 100%;
@@ -96,17 +94,15 @@ max-width: 360px; */
   text-align: center;
   /* shadow: right down blur spread  */
   box-shadow: 0rem 0rem 0.3rem 0.2rem #00000040;
-
 }
 
 #my-images {
-
   background-color: rgba(245, 246, 246, 1);
   padding: 4vh;
   --font-family-dm_sans: "epilogue";
   font-size: 5vh;
   text-align: center;
-  color: #118C5B;
+  color: #118c5b;
 }
 
 /* .title {
@@ -143,7 +139,10 @@ max-width: 360px; */
 
 #my-images h4,
 #my-images h5,
-#my-images h6,
+#my-images h6 {
+  font-size: 18px;
+}
+
 #my-images h7,
 #my-images h8 {
   font-size: 0;
