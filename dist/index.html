@@ -9,9 +9,10 @@
     <style></style>
   </head>
   <body>
-      <div id="title-block">
+      <div id="title-block" class="sticky">
         <img src="img/Text wo BG.png" alt="logo" id="logo" style="margin-top:-0.5vh ;">
       </div>
+      <div class="spacer"></div>
 <div id="counter">
   <p>What lives here?</p>
   <p>3 species... and counting!</p>
@@ -205,9 +206,10 @@
     }
   </script>
   <script type="module">
-    import * as THREE from "./node_modules/three/build/three.module.js";
-    import { OBJLoader } from "../node_modules/three/examples/jsm/loaders/OBJLoader.js";
-    import { OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitControls.js";
+    import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
+    import { OBJLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/OBJLoader.js";
+    import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
+
 
     const container = document.getElementById("container");
 
@@ -324,21 +326,12 @@
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
       apiKey: "AIzaSyDHzRZS9BNim3w5fDeyW6iflaAsy7e-rus",
-
-authDomain: "video-test-7df92.firebaseapp.com",
-
-projectId: "video-test-7df92",
-
-storageBucket: "video-test-7df92.appspot.com",
-
-messagingSenderId: "153868393772",
-
-appId: "1:153868393772:web:42b8dd6ad4771f4e8be089",
-
-measurementId: "G-GXEFQ1BKQX"
-
-
-
+      authDomain: "video-test-7df92.firebaseapp.com",
+      projectId: "video-test-7df92",
+      storageBucket: "video-test-7df92.appspot.com",
+      messagingSenderId: "153868393772",
+      appId: "1:153868393772:web:42b8dd6ad4771f4e8be089",
+      measurementId: "G-GXEFQ1BKQX"
 
     };
 

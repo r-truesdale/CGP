@@ -12,141 +12,20 @@
     <div id="map">
       <div id="container"></div>
     </div>
-    <div id="title-block">
-      <!-- <h1 class="title">QM HabitApp</h1> -->
-      <img src="img/Text wo BG.png" alt="logo" id="logo" />
-    </div>
-    <div class="button" id="" onclick="location.href = 'index.html'">
-      <svg
-        id="home-svg"
-        xmlns="http://www.w3.org/2000/svg"
-        width="35"
-        height="35"
-        viewBox="0 0.5 24 24"
-        stroke="#0000"
-      >
-        <path
-          fill="none"
-          stroke="#F5F6F6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023"
-          transform="translate(2.5 2)"
-        ></path>
-      </svg>
-    </div>
+      <<div id="title-block" class="sticky">
+        <img src="img/Text wo BG.png" alt="logo" id="logo" style="margin-top:-0.5vh ;">
+      </div>
+      <div class="spacer"></div>
+      <div class="button" id="" onclick="location.href = 'index.html'">
+        <svg id='home-svg' xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0.5 24 24" stroke="#0000">
+          <path fill="none" stroke="#F5F6F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023"
+            transform="translate(2.5 2)">
+          </path>
+        </svg>
+      </div>
   </body>
   <script type="module">
-    import * as THREE from "./node_modules/three/build/three.module.js";
-    import { OBJLoader } from "../node_modules/three/examples/jsm/loaders/OBJLoader.js";
-    import { OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitControls.js";
-
-    const container = document.getElementById("container");
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      container.clientWidth / container.clientHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-
-    //Gradient Background
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const context = canvas.getContext("2d");
-    const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, "#cfd9df");
-    gradient.addColorStop(1, "#e2ebf0");
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    const texture = new THREE.CanvasTexture(canvas);
-    scene.background = texture;
-
-    //Lighting
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 10, 0);
-    scene.add(directionalLight);
-
-    directionalLight.castShadow = true;
-
-    directionalLight.shadow.mapSize.width = 2048;
-    directionalLight.shadow.mapSize.height = 2048;
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 500;
-
-    directionalLight.shadow.cameraVisible = true;
-    directionalLight.shadow.bias = 0.001;
-
-    // Load the OBJ file
-    const loader = new OBJLoader();
-    const textureLoader = new THREE.TextureLoader();
-    loader.load("qm campus.obj", function (obj) {
-      obj.scale.set(10, 10, 10); // Scale the object
-
-      const boundingBox = new THREE.Box3().setFromObject(obj); // Compute bounding box
-      const center = new THREE.Vector3();
-      boundingBox.getCenter(center); // Get center of bounding box
-
-      obj.position.sub(center);
-      console.log(center); // Shift object to center at origin
-
-      // Create a pivot point
-      const pivot = new THREE.Object3D();
-      pivot.position.copy(center);
-      scene.add(pivot);
-      pivot.add(obj); // Add the object to the pivot point
-
-      obj.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          const texture = textureLoader.load("textures/Solid_grey.svg.png");
-          child.material = new THREE.MeshPhongMaterial({ map: texture });
-          child.castShadow = true; // Enable casting of shadows by this mesh
-          child.receiveShadow = true; // Enable receiving of shadows by this mesh
-        }
-      });
-    });
-
-    camera.position.z = 5;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      // // Rotate the object
-      // scene.children.forEach(child => {
-      //     if(child instanceof THREE.Object3D){
-      //       child.rotation.x += 0.00;
-      //       child.rotation.y += 0.001;
-      //     }
-      //     });
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // function createAMarker()
-    // {
-    //     // Create a new mesh object for the marker
-    //     const markerGeometry = new THREE.SphereGeometry(0.1, 32, 32);
-    //     const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    //     const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
-
-    //     // Position the marker in the scene
-    //     markerMesh.position.set(0, 0, 0);
-    //     scene.add(markerMesh);
-
-    //     // Add a click event listener to the marker
-    //     markerMesh.addEventListener('click', () => {
-    //     // Perform the desired action when the marker is clicked
-    //     console.log('Marker clicked!');
-    //     });
-    // }
-
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
@@ -157,18 +36,13 @@
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
       apiKey: "AIzaSyDHzRZS9BNim3w5fDeyW6iflaAsy7e-rus",
-
       authDomain: "video-test-7df92.firebaseapp.com",
-
       projectId: "video-test-7df92",
-
       storageBucket: "video-test-7df92.appspot.com",
-
       messagingSenderId: "153868393772",
-
       appId: "1:153868393772:web:42b8dd6ad4771f4e8be089",
+      measurementId: "G-GXEFQ1BKQX"
 
-      measurementId: "G-GXEFQ1BKQX",
     };
 
     // Initialize Firebase
@@ -253,18 +127,18 @@
             case 0:
               heading = "h1";
 
-              text = title;
+              text = title.charAt(0).toUpperCase() + title.slice(1);
               break;
 
             case 1:
               heading = "h2";
 
-              text = category;
+              text = category.charAt(0).toUpperCase() + category.slice(1);
               break;
 
             case 2:
               heading = "h3";
-              text = description;
+              text = description.charAt(0).toUpperCase() + description.slice(1);;
               break;
 
             case 3:
