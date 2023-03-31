@@ -8,7 +8,7 @@
 
     <style></style>
   </head>
-  <body>
+  <body class="otherPage">
       <div id="title-block" class="sticky">
         <img src="img/Text wo BG.png" alt="logo" id="logo" style="margin-top:-0.5vh ;">
       </div>
@@ -40,6 +40,22 @@
     <div id="map">
       <div id="container"></div>
     </div>
+    <div class="data-key">
+    <div class="color-container">
+      <span class="color" style="background-color: #46a937;"></span>
+      <span class="text">Animals</span>
+    </div>
+    
+    <div class="color-container">
+      <span class="color" style="background-color: #d1d123;"></span>
+      <span class="text">Plants</span>
+    </div>
+    
+    <div class="color-container">
+      <span class="color" style="background-color: #4de9aa;"></span>
+      <span class="text">Other</span>
+    </div>
+  </div>
     <button class="button" id="btn-popup2"  onclick=" location.href = 'data.html'">
       <p>What you have seen!</p>
     </button>
@@ -284,6 +300,11 @@
     });
 
     camera.position.z = 5;
+    camera.position.y = 1;
+    camera.position.x = 0.5;
+
+    camera.rotation.y = 0.5;
+    camera.rotation.x = -0.2;
 
     function animate() {
       requestAnimationFrame(animate);

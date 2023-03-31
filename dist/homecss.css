@@ -63,3 +63,8 @@ output {
     output .p{
         visibility: visible;
     }
+
+    #imgStar{
+        width: 80%;
+        height: auto;
+    }

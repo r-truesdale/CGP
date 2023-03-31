@@ -16,7 +16,7 @@
 }
 
 #display-img {
-  width: 50vh;
+  width: 50%;
   border: solid;
   border-radius: 3vh;
   padding: 12vh auto;
@@ -124,15 +124,13 @@ max-width: 360px; */
 }
 
 #my-images h2 {
-  font-size: 5vh;
-  font-size: 5vh;
+  font-size: 3vh;
   padding-bottom: 1vh;
   border-bottom: 0.3vh dashed #d1d123;
 }
 
 #my-images h3 {
-  font-size: 5vh;
-  font-size: 5vh;
+  font-size: 2vh;
   padding-bottom: 1vh;
   border-bottom: 0.3vh dashed #d1d123;
 }

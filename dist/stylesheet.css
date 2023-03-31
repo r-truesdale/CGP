@@ -15,8 +15,11 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-    margin: 0px;
+    margin: 5px;
 
+}
+.otherPage{
+    margin: -0.5vw;
 }
 #logo{
     height: 10vh;
@@ -143,7 +146,6 @@ header {
 }
 
 p {
-    margin: auto;
     width: 90vw;
     line-height: normal;
     color: black;
@@ -153,6 +155,38 @@ p {
 #text {
     font-size: 3vh;
 }
+
+.data-key-group{
+    height: 10vh;
+}
+.data-key {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vh 5vw;
+  }
+  
+  .color-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    margin: 5%;
+  }
+  
+  .color {
+    width: 20vw;
+    height: 20vw;
+    max-width: 100px;
+    max-height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .text {
+    font-size: clamp(8px, 4vw, 32px);
+    font-weight: bold;
+    text-align: center;
+  }
 
 .input-img {
     width: 0.1px;
@@ -186,6 +220,8 @@ p {
     /* top: 10vh; */
     font-size: 4vh;
     font-weight: bold;
+    width: 80vw;
+    margin: auto;
 }
 
 #img-label:active,
@@ -242,6 +278,7 @@ output .image {
 }
 
 #form {
+    width: 100%;
     margin: auto;
 }
 
@@ -296,8 +333,8 @@ output .image {
 
 #btn-popup,
 #btn-popup2 {
-    margin: 10vh auto;
-    padding-left: 2vh;
+    margin: 5vh 10vw;
+    padding-left: auto 1vw;
 }
 
 #help {
