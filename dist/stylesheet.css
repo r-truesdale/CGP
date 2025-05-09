@@ -15,7 +15,7 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-
+    margin: 0;
 }
 #logo{
     height: 10vh;
@@ -36,19 +36,16 @@ body {
 
 .display {
     align-items: center;
-    /* border: 1px none; */
     display: flex;
     flex-direction: column;
-    /* height: 800px;
- max-width: 360px; */
     width: 100vw;
     height: 100vh;
-    margin: -1.2vh;
+
 }
 
 #content {
     margin-top: 15vh;
-    width: 90vw;
+    width: 95vw;
     padding: 0vh 1vw;
     text-align: center;
 }
@@ -85,9 +82,7 @@ body {
     font-weight: bold;
     font-size: 4.5vh;
     width: fit-content;
-    padding-right: 1vh;
     margin: 1vh;
-    margin-left: 0;
 }
 
 #map.button {
@@ -96,10 +91,8 @@ body {
 
 #title-block {
     z-index: 10;
-    /* background-color: rgba(66, 93, 72, 1); */
-    /* background-color: rgb(54, 118, 58); */
     background-color: #118C5B;
-    /* display: flex; */
+    display: flex;
     height: 10vh;
     width: 100%;
     padding: 0vh;
@@ -286,7 +279,6 @@ output .image {
 #btn-home {
     margin: 1vh 3vw;
     display: inline-flex;
-    /* border: #8bab83 0.4vh solid; */
     color: #002300;
     background: #f8fef6;
     border-radius: 2.5vh;
@@ -294,12 +286,20 @@ output .image {
     margin-top: 1vh;
 }
 
-#btn-map {
-    /* float: left; */
-}
+#btn-home-data{
+ position: fixed;
+ border-radius: 1%;
+ z-index: 10;
+ background-color: #118c5bea;
+ display: flex;
+ height: 10vh;
+ width: 100%;
+ padding: 0vh;
+ /* margin: 0; */
+ bottom: 0;
+ text-align: center;
+ /* shadow: right down blur spread  */
 
-#btn-home {
-    /* float: right; */
 }
 
 #map-svg,
@@ -327,11 +327,9 @@ output .image {
     float: right;
 }
 
-#btn-popup,
-#btn-popup2 {
-    margin: 5vh 10vw;
-    padding-left: auto 1vw;
-}
+#btn-popup {
+    margin-bottom: 5vh;
+   }
 
 #help {
     height: 7vh;
@@ -590,11 +588,10 @@ footer {
 }
 
 #slide-img2, #slide-img1 {
-    height: fit-content;
+    height: 100%;
     width: 100%;
     margin: auto;
     vertical-align: middle;
-    /* align-self: auto; */
 }
 
 .numbertext {
@@ -634,7 +631,16 @@ footer {
 
 .img-text {
     background-color: rgb(17, 140, 91, 0.1);
-    padding: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    width: 100%;
+    margin-bottom: 2vh;
+}
+.img-text p{
+width: fit-content;
+text-align: center;
+margin: auto;
+padding-top: 1.5vh;
 }
 
 @keyframes fade {
